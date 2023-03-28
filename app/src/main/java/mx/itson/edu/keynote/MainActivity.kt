@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         navigationView.setNavigationItemSelectedListener(this)
-    }
+
+}
 
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager: FragmentManager = supportFragmentManager;
@@ -85,7 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar.setTitle("Notas")
                 replaceFragment(Notas())
                 drawerLayout.closeDrawer(GravityCompat.START)
-                print("lol")
                 true
             }
             R.id.nav_ocultas ->{
