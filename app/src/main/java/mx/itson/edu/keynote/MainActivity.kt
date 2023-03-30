@@ -1,9 +1,16 @@
 package mx.itson.edu.keynote
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,16 +20,29 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
+
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var navigationView: NavigationView
+    lateinit var toolbar: Toolbar
+    lateinit var toolbarTitle: TextView
+    lateinit var searchIcon: ImageView
+    lateinit var gradientCalendarToolbar: Drawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView);
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout);
-        val navigationView: NavigationView = findViewById(R.id.nav_view);
-        val toolbar:Toolbar = findViewById(R.id.toolbar);
+        // Inicialización de las vistas
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.nav_view)
+        toolbar = findViewById(R.id.toolbar)
+        toolbarTitle = findViewById(R.id.toolbar_title)
+        searchIcon = findViewById(R.id.search_icon)
+        gradientCalendarToolbar = resources.getDrawable(R.drawable.gradient_toolbar)
 
         setSupportActionBar(toolbar);
 
@@ -34,36 +54,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFragment()).commit();
             //navigationView.setCheckedItem(R.id.nav_home)
         }
-        toolbar.setTitle("Inicio")
+        toolbarTitle.setText("Inicio")
         replaceFragment(HomeFragment());
+
+//        toolbar.setNavigationIcon(R.drawable.baseline_menu_24)
 
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener {item ->
             when (item.itemId) {
                 R.id.bottom_home ->{
-                    toolbar.setTitle("Inicio")
+                    toolbarTitle.setText("Inicio")
+                    originalToolbarState()
                     replaceFragment(HomeFragment())
                     true
                 }
                 R.id.bottom_calendar_plus ->{
-                    toolbar.setTitle("Horario")
+                    toolbarTitle.setText("Horario")
+                    originalToolbarState()
                     replaceFragment(CalendarPlus())
-                    print("lol")
                     true
                 }
                 R.id.bottom_calendar ->{
-                    toolbar.setTitle("Calendario")
+                    toolbarTitle.setText("Calendario")
+                    calendarToolbarState()
                     replaceFragment(Calendar())
                     true
                 }
                 R.id.bottom_list ->{
-                    toolbar.setTitle("Tareas")
+                    toolbarTitle.setText("Tareas")
+                    originalToolbarState()
                     replaceFragment(ListFragment())
                     true
                 }
                 else -> false
             }
-
         }
 
         navigationView.setNavigationItemSelectedListener(this)
@@ -78,30 +102,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        val toolbar:Toolbar = findViewById(R.id.toolbar);
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout);
         return when (item.itemId) {
             R.id.nav_notas ->{
-                toolbar.setTitle("Notas")
+                toolbarTitle.setText("Notas")
+                originalToolbarState()
                 replaceFragment(Notas())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.nav_ocultas ->{
-                toolbar.setTitle("Ocultas")
+                toolbarTitle.setText("Ocultas")
+                originalToolbarState()
                 replaceFragment(OcultasFragment())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.nav_eliminadas->{
-                toolbar.setTitle("Eliminadas")
+                toolbarTitle.setText("Eliminadas")
+                originalToolbarState()
                 replaceFragment(EliminadasFragment())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             else -> false
         }
+    }
+
+    fun originalToolbarState(){
+        toolbar.setBackgroundColor(Color.WHITE)
+        searchIcon.visibility = View.VISIBLE
+        toolbarTitle.setTextColor(Color.DKGRAY)
+        toolbar.setOutlineProvider(null);
+    }
+
+    fun calendarToolbarState(){
+        toolbar.setBackground(gradientCalendarToolbar)
+        searchIcon.visibility = View.GONE
+        toolbarTitle.setTextColor(Color.WHITE)
+        toolbar.setOutlineProvider(null);
     }
 
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CalendarViewStyle">
+        <item name="android:background">@drawable/calendar_view_background</item>
+    </style>
+</resources>
