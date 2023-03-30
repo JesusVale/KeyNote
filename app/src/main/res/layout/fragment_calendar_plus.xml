@@ -3,13 +3,201 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_calendar_plus"
     tools:context=".CalendarPlus">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Calendar Plus" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:text="Lunes" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#164080"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:paddingVertical="17dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:text="9:00 - 10:00 Fotografia"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#8FA9D0"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:paddingVertical="17dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:text="Receso"/>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_marginVertical="20dp"
+            android:text="Martes" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#164080"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:paddingVertical="17dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="9:00 - 10:00 Fotografia"/>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_marginVertical="20dp"
+            android:text="Miércoles" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#164080"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:paddingVertical="17dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="9:00 - 10:00 Fotografia"/>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_marginVertical="20dp"
+            android:text="Jueves" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#164080"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:paddingVertical="17dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="9:00 - 10:00 Fotografia"/>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_marginVertical="20dp"
+            android:text="Viernes" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#164080"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:paddingVertical="17dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:text="9:00 - 10:00 Fotografia"/>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+
+    </LinearLayout>
 
 </FrameLayout>
