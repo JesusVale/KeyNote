@@ -58,7 +58,7 @@
             android:minWidth="0dp"
             android:background="@drawable/rounded_buttonlogin"
             android:text="Iniciar sesión"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="20dp"
             android:textAllCaps="false" />
 
         <TextView
@@ -68,9 +68,20 @@
             android:textSize="14sp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginBottom="26dp"
+            android:layout_marginBottom="10dp"
             android:textStyle="bold"
             android:text="¿Olvidaste tu contraseña?" />
+
+        <TextView
+            android:id="@+id/registrarse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginBottom="26dp"
+            android:textStyle="bold"
+            android:text="Registrarse" />
 
         <View
             android:layout_width="265dp"

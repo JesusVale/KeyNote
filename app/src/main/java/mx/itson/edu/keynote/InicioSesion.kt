@@ -12,8 +12,9 @@ class InicioSesion : AppCompatActivity() {
         setContentView(R.layout.activity_inicio_sesion)
 
         val btnLogin: Button = findViewById(R.id.btn_login)
-
+        val registrar: TextView = findViewById(R.id.registrarse)
         val txtOlvidado: TextView = findViewById(R.id.contra_olvidada)
+
 
         btnLogin.setOnClickListener{
             val intent:Intent = Intent(this, MainActivity::class.java)
@@ -21,6 +22,11 @@ class InicioSesion : AppCompatActivity() {
         }
 
         txtOlvidado.setOnClickListener {
+            val intent:Intent = Intent(this, Restablecer_contrasena::class.java)
+            startActivity(intent)
+        }
+
+        registrar.setOnClickListener {
             val intent:Intent = Intent(this, registrar_usuario::class.java)
             startActivity(intent)
         }
