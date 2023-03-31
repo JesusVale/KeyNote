@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
 
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val layoutManager = GridLayoutManager(this.activity, 1, GridLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val layoutManagerUltimas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
         val layoutManagerFijadas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
 

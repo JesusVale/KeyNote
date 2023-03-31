@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfiguracionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="350dp"
+            android:layout_height="210dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/rounded_gradient" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/imageView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-140dp"
+            android:background="@drawable/circle"
+            android:clipToOutline="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/piplup" />
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnEditarPerfil"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="300dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_button_config"
+            android:drawableLeft="@drawable/user_circle_button"
+            android:gravity="center_vertical|start"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Editar Perfil"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:backgroundTint="@color/grayTextField" />
+
+        <Button
+            android:id="@+id/btnCambiarFoto"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_button_config"
+            android:drawableLeft="@drawable/baseline_image_24"
+            android:gravity="center_vertical|start"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Cambiar Foto"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:backgroundTint="@color/grayTextField" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="254dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/rounded_button_logout"
+            android:text="Cerrar Sesión"
+            app:backgroundTint="#ADAFE9" />
+
+    </LinearLayout>
+
+</FrameLayout>
