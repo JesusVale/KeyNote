@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:textSize="18dp"
+            android:textColor="@color/black"
             android:text= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor libero sed leo sagittis, vel commodo ante tempor. Phasellus ultricies finibus tortor in molestie. Suspendisse sagittis arcu hendrerit, faucibus magna id, mollis tortor."/>
         <FrameLayout
             android:layout_width="115dp"
@@ -59,12 +60,13 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textSize="18dp"
+            android:textColor="@color/black"
             android:text= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor libero sed leo sagittis, vel commodo ante tempor. Phasellus ultricies finibus tortor in molestie. Suspendisse sagittis arcu hendrerit, faucibus magna id, mollis tortor."/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_marginTop="330dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="20dp"
             >
             <FrameLayout

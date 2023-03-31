@@ -15,4 +15,5 @@
     <color name="recordRed">#FF6F6F</color>
     <color name="blue">#38B9F1</color>
     <color name="green">#6EE06B</color>
+    <color name="yellowButton">#F3E081</color>
 </resources>
