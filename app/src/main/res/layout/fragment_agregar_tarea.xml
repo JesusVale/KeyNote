@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-20dp"
-                android:src="@drawable/material_symbols_close__1_"
+                android:src="@drawable/material_symbols_close"
                 />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:id="@+id/btnPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/plus"
+                android:src="@drawable/add"
                 android:layout_marginLeft="15dp"
                 />
 
