@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="181dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp"
             android:orientation="horizontal">
@@ -24,17 +24,19 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="-10dp"
                 android:src="@drawable/clock" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="-20dp"
                 android:layout_weight="1"
-                android:text="Proximas" />
+                android:text="Proximas"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <HorizontalScrollView

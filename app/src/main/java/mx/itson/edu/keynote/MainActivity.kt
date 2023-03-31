@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var toolbarTitle: TextView
     lateinit var searchIcon: ImageView
     lateinit var gradientCalendarToolbar: Drawable
+    lateinit var addIcon: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar = findViewById(R.id.toolbar)
         toolbarTitle = findViewById(R.id.toolbar_title)
         searchIcon = findViewById(R.id.search_icon)
+        addIcon = findViewById(R.id.addIcon)
+
+        addIcon.visibility = View.GONE
         gradientCalendarToolbar = resources.getDrawable(R.drawable.gradient_toolbar)
 
         setSupportActionBar(toolbar);
@@ -63,30 +67,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
 
+
+
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener {item ->
             when (item.itemId) {
                 R.id.bottom_home ->{
                     toolbarTitle.setText("Inicio")
                     originalToolbarState()
+                    addIcon.visibility = View.GONE
                     replaceFragment(HomeFragment())
                     true
                 }
                 R.id.bottom_calendar_plus ->{
                     toolbarTitle.setText("Horario")
                     originalToolbarState()
+                    addIcon.visibility = View.VISIBLE
                     replaceFragment(CalendarPlus())
                     true
                 }
                 R.id.bottom_calendar ->{
                     toolbarTitle.setText("Calendario")
                     calendarToolbarState()
+                    addIcon.visibility = View.GONE
                     replaceFragment(Calendar())
                     true
                 }
                 R.id.bottom_list ->{
                     toolbarTitle.setText("Tareas")
                     originalToolbarState()
+                    addIcon.visibility = View.VISIBLE
                     replaceFragment(ListFragment())
                     true
                 }
@@ -111,6 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbarTitle.setText("Notas")
                 originalToolbarState()
                 replaceFragment(Notas())
+                addIcon.visibility = View.GONE
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
@@ -118,12 +129,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbarTitle.setText("Ocultas")
                 originalToolbarState()
                 replaceFragment(OcultasFragment())
+                addIcon.visibility = View.GONE
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.nav_eliminadas->{
                 toolbarTitle.setText("Eliminadas")
                 originalToolbarState()
+                addIcon.visibility = View.GONE
                 replaceFragment(EliminadasFragment())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true

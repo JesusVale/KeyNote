@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".agregarTarea">
+    tools:context=".AgregarTarea">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -22,26 +22,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-20dp"
-                android:src="@drawable/material_symbols_close"
-                />
+                android:src="@drawable/material_symbols_close" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Agregar tarea"
-                android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/grayDark"
                 android:layout_marginLeft="15dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:text="Agregar tarea"
+                android:textColor="@color/grayDark"
+                android:textSize="20dp" />
 
             <ImageButton
                 android:id="@+id/btnPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add"
                 android:layout_marginLeft="15dp"
-                />
+                android:src="@drawable/add" />
 
         </LinearLayout>
 
@@ -87,7 +85,7 @@
                     android:background="@drawable/rounded_textfield"
                     android:ems="10"
                     android:hint="dd/mm"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="70dp"
                     android:inputType="date"
                     android:paddingHorizontal="40dp"
                     android:paddingVertical="7dp"
@@ -150,7 +148,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/searchview_background"
                 android:ems="10"
-                android:hint="dd/mm"
+                android:hint="info"
                 android:inputType="text"
                 android:paddingHorizontal="22dp"
                 android:paddingVertical="7dp" />

@@ -46,8 +46,8 @@ class Notas : Fragment() {
                     val fragmentManager=requireActivity().supportFragmentManager
                     val segundoFragmento=CamaraFragment()
                     val fragmentTransaction=fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
+                    fragmentTransaction.commit()
             }
         btn_audio.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager

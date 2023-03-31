@@ -62,7 +62,7 @@
             android:textAllCaps="false" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/contra_olvidada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"

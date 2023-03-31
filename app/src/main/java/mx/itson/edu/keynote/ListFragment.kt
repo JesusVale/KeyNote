@@ -1,10 +1,14 @@
 package mx.itson.edu.keynote
 
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +31,7 @@ class ListFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -34,7 +39,24 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        val myFragmentView: View? = inflater.inflate(R.layout.fragment_list, container, false)
+        val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
+        val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
+        btn_add.setOnClickListener{
+            val fragmentManager=requireActivity().supportFragmentManager
+            val segundoFragmento=AgregarTarea()
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            btn_add.visibility = View.GONE
+            btn_lupa.visibility = View.GONE
+            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
+            fragmentTransaction.commit()
+        }
+
+
+
+        return myFragmentView
+
+
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 
 class InicioSesion : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,8 +13,15 @@ class InicioSesion : AppCompatActivity() {
 
         val btnLogin: Button = findViewById(R.id.btn_login)
 
+        val txtOlvidado: TextView = findViewById(R.id.contra_olvidada)
+
         btnLogin.setOnClickListener{
             val intent:Intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        txtOlvidado.setOnClickListener {
+            val intent:Intent = Intent(this, registrar_usuario::class.java)
             startActivity(intent)
         }
 
