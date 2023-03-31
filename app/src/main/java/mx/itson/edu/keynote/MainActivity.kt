@@ -141,6 +141,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
+            R.id.nav_config->{
+                toolbarTitle.setText("Configuracion")
+                originalToolbarState()
+                addIcon.visibility = View.GONE
+                replaceFragment(ConfiguracionFragment())
+                drawerLayout.closeDrawer(GravityCompat.START)
+                true
+            }
             else -> false
         }
     }

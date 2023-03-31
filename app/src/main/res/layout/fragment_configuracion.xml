@@ -29,6 +29,8 @@
             android:layout_marginTop="-140dp"
             android:background="@drawable/circle"
             android:clipToOutline="true"
+            android:outlineProvider="background"
+            android:shape="oval"
             android:scaleType="fitCenter"
             android:src="@drawable/piplup" />
 
@@ -83,6 +85,8 @@
             android:layout_marginTop="200dp"
             android:background="@drawable/rounded_button_logout"
             android:text="Cerrar Sesión"
+            android:textSize="16sp"
+            android:textAllCaps="false"
             app:backgroundTint="#ADAFE9" />
 
     </LinearLayout>
