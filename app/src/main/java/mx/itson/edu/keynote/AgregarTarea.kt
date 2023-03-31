@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +35,30 @@ class AgregarTarea : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_agregar_tarea, container, false)
+        val myFragmentView: View? = inflater.inflate(R.layout.fragment_agregar_tarea, container, false)
+        val btn_plus: ImageButton = myFragmentView!!.findViewById(R.id.btnPlus)
+        val btn_delete: ImageButton = myFragmentView!!.findViewById(R.id.btnX)
+        val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
+        val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
+        btn_plus.setOnClickListener {
+            val fragmentManager=requireActivity().supportFragmentManager
+            val segundoFragmento=ListFragment()
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            btn_add.visibility = View.VISIBLE
+            btn_lupa.visibility = View.VISIBLE
+            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
+            fragmentTransaction.commit();
+        }
+        btn_delete.setOnClickListener {
+            val fragmentManager=requireActivity().supportFragmentManager
+            val segundoFragmento=ListFragment()
+            val fragmentTransaction=fragmentManager.beginTransaction()
+            btn_add.visibility = View.VISIBLE
+            btn_lupa.visibility = View.VISIBLE
+            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
+            fragmentTransaction.commit();
+        }
+        return myFragmentView
     }
 
     companion object {
