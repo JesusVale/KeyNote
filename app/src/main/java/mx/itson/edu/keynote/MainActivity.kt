@@ -1,12 +1,11 @@
 package mx.itson.edu.keynote
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -57,7 +56,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbarTitle.setText("Inicio")
         replaceFragment(HomeFragment());
 
-//        toolbar.setNavigationIcon(R.drawable.baseline_menu_24)
+        searchIcon.setOnClickListener {
+            var intent: Intent = Intent(this, Buscador::class.java)
+            startActivity(intent)
+        }
 
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setOnItemSelectedListener {item ->
