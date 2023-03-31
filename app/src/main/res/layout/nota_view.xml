@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layoutNota"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/blue_note_background"
