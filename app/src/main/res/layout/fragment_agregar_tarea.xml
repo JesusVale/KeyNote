@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".agregarTarea">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-20dp"
+                android:src="@drawable/material_symbols_close__1_"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Agregar tarea"
+                android:textSize="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/grayDark"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical" />
+
+            <ImageButton
+                android:id="@+id/btnPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:layout_marginLeft="15dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/tituloTxt"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="11dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_textfield"
+                android:ems="10"
+                android:hint="Título"
+                android:inputType="text"
+                android:layout_marginTop="40dp"
+                android:paddingHorizontal="22dp"
+                android:paddingVertical="7dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="55dp"
+                    android:text="Fecha de entrega"/>
+
+                <EditText
+                    android:id="@+id/fechaTxt"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_textfield"
+                    android:ems="10"
+                    android:hint="dd/mm"
+                    android:layout_marginLeft="100dp"
+                    android:inputType="date"
+                    android:paddingHorizontal="40dp"
+                    android:paddingVertical="7dp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="54dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:text="Añadir a clase" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="Televisión"
+                    android:textSize="9sp"
+                    android:background="@drawable/red_note_background"
+                    app:backgroundTint="@color/recordRed"
+                    android:layout_marginLeft="50dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/blue_note_background"
+                    app:backgroundTint="@color/blue"
+                    android:text="Dibujo"
+                    android:textSize="9sp"
+                    android:layout_marginLeft="15dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/green_note_background"
+                    app:backgroundTint="@color/green"
+                    android:text="Titulación"
+                    android:textSize="9sp"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/infoTxt"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/searchview_background"
+                android:ems="10"
+                android:hint="dd/mm"
+                android:inputType="text"
+                android:paddingHorizontal="22dp"
+                android:paddingVertical="7dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

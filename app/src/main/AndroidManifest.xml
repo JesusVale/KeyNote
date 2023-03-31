@@ -12,7 +12,14 @@
         android:theme="@style/Theme.KeyNote"
         tools:targetApi="31">
         <activity
+<<<<<<< Updated upstream
             android:name=".Buscador"
+=======
+            android:name=".registrar_usuario"
+            android:exported="false" />
+        <activity
+            android:name=".Restablecer_contrasena"
+>>>>>>> Stashed changes
             android:exported="false" />
         <activity
             android:name=".MainActivity"
