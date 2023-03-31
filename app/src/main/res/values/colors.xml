@@ -10,5 +10,6 @@
 
     <color name="grayTextField">#D9D9D9</color>
     <color name="purpleButton">#C490EC</color>
+    <color name="grayDark">#4C4C4C</color>
 
 </resources>
