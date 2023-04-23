@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "849997520614",
+    "project_id": "keynote-81533",
+    "storage_bucket": "keynote-81533.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849997520614:android:73604d62704515c8cee527",
+        "android_client_info": {
+          "package_name": "mx.itson.edu.keynote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849997520614-1833b2kh1fngi4s1rekuahg0uuseibrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCvaYScsaZpwBmQd8kdBoVWceJ3wKpVUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849997520614-1833b2kh1fngi4s1rekuahg0uuseibrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
