@@ -9,10 +9,20 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 
 class registrar_usuario : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private val database = Firebase.database
+    private val myRef = database.getReference("Users")
+    private val userRef= FirebaseDatabase.getInstance().getReference("Users")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_usuario)
@@ -29,6 +39,8 @@ class registrar_usuario : AppCompatActivity() {
             val intent: Intent = Intent(this, InicioSesion::class.java)
             startActivity(intent)
         }
+
+
     }
 
     private fun validarDatos(){
@@ -48,9 +60,10 @@ class registrar_usuario : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }else{
                 if(password == password2){
+
                     val usuario=User(
-                        nombre,
                         correo,
+                        nombre,
                         password
                     )
                     registrarFirebase(usuario)
@@ -67,14 +80,20 @@ class registrar_usuario : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(usuario.correo.toString(),usuario.password.toString())
             .addOnCompleteListener(this){task->
                 if(task.isSuccessful){
-                    val user=auth.currentUser
-                    Toast.makeText(baseContext,"Autenticacion exitosa",Toast.LENGTH_LONG)
-                    val intent:Intent = Intent(this, InicioSesion::class.java)
+                    //userRef.push().setValue(usuario)
+                    val userId= userRef.push().key!!
+                    userRef.child(userId).setValue(usuario)
+                    //myRef.push().setValue(usuario)
+                    val intent: Intent = Intent(this, InicioSesion::class.java)
                     startActivity(intent)
+                    Toast.makeText(baseContext,"Autenticacion exitosa",Toast.LENGTH_LONG)
+
                 }else{
                     Toast.makeText(baseContext,"Autenticacion fallida",Toast.LENGTH_SHORT)
                 }
 
             }
+
+
     }
 }
