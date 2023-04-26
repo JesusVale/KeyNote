@@ -52,8 +52,8 @@ class InicioSesion : AppCompatActivity() {
                 Toast.makeText(applicationContext,"La contraseña debe ser mayor a 7 caracteres",Toast.LENGTH_SHORT).show()
             }else{
                 val usuario=User(
-                    null,
                     correo,
+                    null,
                     password
                 )
                 loginFirebase(usuario)
@@ -64,7 +64,6 @@ class InicioSesion : AppCompatActivity() {
         auth.signInWithEmailAndPassword(usuario.correo.toString(),usuario.password.toString())
             .addOnCompleteListener(this){task->
                 if(task.isSuccessful){
-                    val user=auth.currentUser
                     val intent:Intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }else{
