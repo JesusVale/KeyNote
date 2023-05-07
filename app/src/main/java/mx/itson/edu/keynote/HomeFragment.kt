@@ -1,17 +1,15 @@
 package mx.itson.edu.keynote
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +27,7 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var tareas: ArrayList<Nota> = ArrayList<Nota>()
+    private lateinit var infiniteViewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +45,7 @@ class HomeFragment : Fragment() {
 
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
         val layoutManagerUltimas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
         val layoutManagerFijadas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
 
@@ -77,12 +76,14 @@ class HomeFragment : Fragment() {
         tareas.add(Nota("3:00 - 4:00 Canto", "Que sepa el mundo que en marcha estoy, que voy a cumplir mi misión", R.drawable.red_note_background))
     }
 
+
     class AdapterNotas(var tareas: ArrayList<Nota> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
 
         class ViewHolder(view:View): RecyclerView.ViewHolder(view){
             val titulo:TextView = view.findViewById(R.id.titulo)
             val contenido:TextView = view.findViewById(R.id.contenido)
             var layoutNota:LinearLayout = view.findViewById(R.id.layoutNota)
+
             init {
                 titulo
                 contenido
@@ -108,6 +109,11 @@ class HomeFragment : Fragment() {
             holder.titulo.setText(tarea.titulo)
             holder.contenido.setText(tarea.contenido)
             holder.layoutNota.setBackgroundResource(tarea.background)
+
+            holder.layoutNota.setOnClickListener{
+
+            }
+
         }
 
     }
