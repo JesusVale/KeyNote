@@ -1,11 +1,17 @@
 package mx.itson.edu.keynote
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Notas : Fragment() {
+
+    private lateinit var imgView: ImageView
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,12 +50,15 @@ class Notas : Fragment() {
             val myFragmentView: View? = inflater.inflate(R.layout.fragment_notas, container, false)
             val btn_camara: ImageButton = myFragmentView!!.findViewById(R.id.btn_photo)
             val btn_audio: ImageButton = myFragmentView!!.findViewById(R.id.btn_voice)
+            imgView = myFragmentView!!.findViewById(R.id.iv_visor)
         btn_camara.setOnClickListener {
-                    val fragmentManager=requireActivity().supportFragmentManager
-                    val segundoFragmento=CamaraFragment()
-                    val fragmentTransaction=fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
-                    fragmentTransaction.commit()
+//                    val fragmentManager=requireActivity().supportFragmentManager
+//                    val segundoFragmento=CamaraFragment()
+//                    val fragmentTransaction=fragmentManager.beginTransaction()
+//                    fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
+//                    fragmentTransaction.commit()
+            abrirCamara()
+
             }
         btn_audio.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager
@@ -57,6 +68,20 @@ class Notas : Fragment() {
             fragmentTransaction.commit();
         }
         return myFragmentView
+    }
+
+    private fun abrirCamara(){
+        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(intent, 1)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            imgView.setImageBitmap(imageBitmap)
+        }
     }
 
     companion object {
