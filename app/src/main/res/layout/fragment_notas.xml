@@ -16,14 +16,23 @@
         android:layout_marginBottom="15dp"
         android:orientation="vertical"
         >
-        <TextView
+
+        <EditText
+            android:id="@+id/tituloNota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:text= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor libero sed leo sagittis, vel commodo ante tempor. Phasellus ultricies finibus tortor in molestie. Suspendisse sagittis arcu hendrerit, faucibus magna id, mollis tortor."/>
-        <FrameLayout
+            android:ems="10"
+
+            android:text="Titulo Nota" />
+
+        <EditText
+            android:id="@+id/textoNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Contenido Nota. No esperaba este efecto, forma audaz, que impresión, no es simetrico perfecto" />
+
+        <!--<FrameLayout
             android:layout_width="115dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_button_play"
@@ -53,57 +62,50 @@
                 android:scaleType="fitCenter"
 
                 />
-        </FrameLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:text= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor libero sed leo sagittis, vel commodo ante tempor. Phasellus ultricies finibus tortor in molestie. Suspendisse sagittis arcu hendrerit, faucibus magna id, mollis tortor."/>
+        </FrameLayout>-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
             android:layout_marginTop="100dp"
             android:layout_marginEnd="20dp"
-            >
+            android:gravity="right">
+
             <FrameLayout
+                android:id="@+id/menuNotas"
                 android:layout_width="230dp"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_button_play"
-                android:backgroundTint="@color/white"
-                >
+                android:backgroundTint="@color/white">
+
                 <ImageButton
                     android:id="@+id/btn_voice"
                     android:layout_width="35dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/voice_line"
                     android:background="@color/white"
                     android:scaleType="fitCenter"
-                    />
+                    android:src="@drawable/voice_line" />
+
                 <ImageButton
                     android:layout_width="35dp"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="0dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/attachment_plus"
-                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="0dp"
                     android:background="@color/white"
-                    />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/attachment_plus" />
+
                 <ImageButton
                     android:id="@+id/btn_photo"
                     android:layout_width="35dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
                     android:layout_marginEnd="20dp"
-                    android:src="@drawable/baseline_photo_camera_24"
-                    android:scaleType="fitCenter"
                     android:background="@color/white"
-                    />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/baseline_photo_camera_24" />
 
             </FrameLayout>
         </LinearLayout>
