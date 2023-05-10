@@ -17,6 +17,11 @@ import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,7 +74,13 @@ class HomeFragment : Fragment() {
         recyclerUltimas.setLayoutManager(layoutManagerUltimas)
         recyclerFijadas.setLayoutManager(layoutManagerFijadas)
 
-        getNotas()
+        CoroutineScope(Dispatchers.IO).launch {
+            // Small delay so the user can actually see the splash screen
+            // for a moment as feedback of an attempt to retrieve data.
+            delay(250)
+            getNotas()
+        }
+
         Log.d("Total de tareas ea", "${tareas.size}")
         val adapterNotas:AdapterNotas = AdapterNotas(tareas)
         recyclerHorario.adapter = adapterNotas
@@ -88,8 +99,8 @@ class HomeFragment : Fragment() {
     }*/
 
 
-    private fun getNotas(){
-        noteRef.get().addOnSuccessListener {
+    private suspend fun getNotas(){
+        var task=noteRef.get().addOnSuccessListener {
 
             var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
             var mapKeys: Set<String> = mapNotes.keys
@@ -110,7 +121,7 @@ class HomeFragment : Fragment() {
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
-
+        task.await()
     }
 
     class AdapterNotas(var tareas: ArrayList<Note> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
