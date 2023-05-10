@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
     var tareas: ArrayList<Note> = ArrayList<Note>()
     private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
     private lateinit var infiniteViewPager: ViewPager2
+    lateinit var recyclerHorario:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class HomeFragment : Fragment() {
         val layoutManagerFijadas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
 
 
-        val recyclerHorario:RecyclerView = myFragmentView!!.findViewById(R.id.recyclerHorario)
+        recyclerHorario = myFragmentView!!.findViewById(R.id.recyclerHorario)
         val recyclerUltimas:RecyclerView = myFragmentView!!.findViewById(R.id.recyclerUltimas)
         val recyclerFijadas:RecyclerView = myFragmentView!!.findViewById(R.id.recyclerFijadas)
 
@@ -88,36 +89,27 @@ class HomeFragment : Fragment() {
 
 
     private fun getNotas(){
-        var tareasN: ArrayList<Note> = ArrayList<Note>()
         noteRef.get().addOnSuccessListener {
 
             var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
             var mapKeys: Set<String> = mapNotes.keys
-            var mapValue: Map<String,Object> = mapNotes.get(mapKeys.elementAt(0)) as Map<String, Object>
-            var titulo: String= mapValue.get("titulo").toString()
-            var contenido: String= mapValue.get("contenido").toString()
-            var tipo: String= mapValue.get("tipo").toString()
-            var imagen: String= mapValue.get("image").toString()
-            val nuevaTarea = Note(titulo, contenido, tipo, imagen)
+            for (value in mapNotes.values) {
+                var mapValue: Map<String,Object> = value as Map<String, Object>
+                var titulo: String= mapValue.get("titulo").toString()
+                var contenido: String= mapValue.get("contenido").toString()
+                var tipo: String= mapValue.get("tipo").toString()
+                var imagen: String= mapValue.get("image").toString()
+                val nuevaTarea = Note(titulo, contenido, tipo, imagen)
 
-            // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
-            tareasN.add(nuevaTarea)
-            Log.d("firebase", "${tareasN.get(0)}")
-            tareas = tareasN
+                // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
+                tareas.add(nuevaTarea)
+            }
+
+            val adapterNotas:AdapterNotas = AdapterNotas(tareas)
+            recyclerHorario.adapter = adapterNotas
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
-//        Firebase.firestore.collection("Notes")
-//            .get()
-//            .addOnSuccessListener { documents ->
-//                for (document in documents) {
-//
-//                    tareas.add(Note(document.getString("titulo"), document.getString("contenido"), document.getString("tipo"), document.getString("imagen")))
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//
-//            }
 
     }
 
