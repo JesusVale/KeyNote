@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -87,6 +89,13 @@ class HomeFragment : Fragment() {
 
     private fun getNotas(){
         noteRef.get().addOnSuccessListener {
+
+            val titulo= it.child("titulo").getValue(String::class.java)
+            val contenido= it.child("contenido").getValue(String::class.java)
+            val tipo= it.child("tipo").getValue(String::class.java)
+            val imagen= it.child("imagen").getValue(String::class.java)
+            tareas.add(Note(titulo, contenido, tipo, imagen))
+            Log.i("firebase value", "Got value ${contenido}")
             Log.i("firebase", "Got value ${it.value}")
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
@@ -104,6 +113,12 @@ class HomeFragment : Fragment() {
 //            }
 
     }
+
+    class Nota(val titulo: String = "", val contenido: String = "", val tipo: String = "", val imagen:String = ""){
+
+    }
+
+    class StringMapType : GenericTypeIndicator<HashMap<String, String>>()
 
     class AdapterNotas(var tareas: ArrayList<Note> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
 
