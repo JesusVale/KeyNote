@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
         recyclerFijadas.setLayoutManager(layoutManagerFijadas)
 
         getNotas()
-
+        Log.d("Total de tareas ea", "${tareas.size}")
         val adapterNotas:AdapterNotas = AdapterNotas(tareas)
         recyclerHorario.adapter = adapterNotas
         recyclerUltimas.adapter = adapterNotas
@@ -88,15 +88,22 @@ class HomeFragment : Fragment() {
 
 
     private fun getNotas(){
+        var tareasN: ArrayList<Note> = ArrayList<Note>()
         noteRef.get().addOnSuccessListener {
 
-            val titulo= it.child("titulo").getValue(String::class.java)
-            val contenido= it.child("contenido").getValue(String::class.java)
-            val tipo= it.child("tipo").getValue(String::class.java)
-            val imagen= it.child("imagen").getValue(String::class.java)
-            tareas.add(Note(titulo, contenido, tipo, imagen))
-            Log.i("firebase value", "Got value ${contenido}")
-            Log.i("firebase", "Got value ${it.value}")
+            var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
+            var mapKeys: Set<String> = mapNotes.keys
+            var mapValue: Map<String,Object> = mapNotes.get(mapKeys.elementAt(0)) as Map<String, Object>
+            var titulo: String= mapValue.get("titulo").toString()
+            var contenido: String= mapValue.get("contenido").toString()
+            var tipo: String= mapValue.get("tipo").toString()
+            var imagen: String= mapValue.get("image").toString()
+            val nuevaTarea = Note(titulo, contenido, tipo, imagen)
+
+            // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
+            tareasN.add(nuevaTarea)
+            Log.d("firebase", "${tareasN.get(0)}")
+            tareas = tareasN
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
@@ -113,12 +120,6 @@ class HomeFragment : Fragment() {
 //            }
 
     }
-
-    class Nota(val titulo: String = "", val contenido: String = "", val tipo: String = "", val imagen:String = ""){
-
-    }
-
-    class StringMapType : GenericTypeIndicator<HashMap<String, String>>()
 
     class AdapterNotas(var tareas: ArrayList<Note> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
 
