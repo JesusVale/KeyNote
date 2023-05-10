@@ -25,7 +25,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:src="@drawable/baseline_calendar_month_24" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:textSize="18sp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Por Horario" />
+                android:text="Todas Notas" />
         </LinearLayout>
 
         <!--<HorizontalScrollView

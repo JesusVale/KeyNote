@@ -1,6 +1,7 @@
 package mx.itson.edu.keynote
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +31,8 @@ class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var tareas: ArrayList<Nota> = ArrayList<Nota>()
+    var tareas: ArrayList<Note> = ArrayList<Note>()
+    private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
     private lateinit var infiniteViewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +43,8 @@ class HomeFragment : Fragment() {
         }
 
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +66,7 @@ class HomeFragment : Fragment() {
         recyclerUltimas.setLayoutManager(layoutManagerUltimas)
         recyclerFijadas.setLayoutManager(layoutManagerFijadas)
 
-        agregarNotas()
+        getNotas()
 
         val adapterNotas:AdapterNotas = AdapterNotas(tareas)
         recyclerHorario.adapter = adapterNotas
@@ -69,15 +77,30 @@ class HomeFragment : Fragment() {
         return myFragmentView
     }
 
-    fun agregarNotas(){
+    /*fun agregarNotas(){
         tareas.add(Nota("1:00 - 2:00 Ejercicio", "Tu me dices que no tienes ritmo, pues mira lo que acabas de hacer, yo ya tengo un trabajo muy bueno", R.drawable.navyblue_note_background))
         tareas.add(Nota("10:00 - 12:00 Tarea", "Matematicas Realizar los siguientes ejercicios...", R.drawable.blue_note_background))
         tareas.add(Nota("11:00 - 12:00 Dibujo", "EOOOOO E000 EEO EEO EEEEO EEEEE0 EO EO EO EO ALL RIGHT ALL RIGHT!!", R.drawable.orange_note_background))
         tareas.add(Nota("3:00 - 4:00 Canto", "Que sepa el mundo que en marcha estoy, que voy a cumplir mi misión", R.drawable.red_note_background))
+    }*/
+
+
+    private fun getNotas(){
+        Firebase.firestore.collection("Notes")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+
+                    tareas.add(Note(document.getString("titulo"), document.getString("contenido"), document.getString("tipo"), document.getString("imagen")))
+                }
+            }
+            .addOnFailureListener { exception ->
+
+            }
+
     }
 
-
-    class AdapterNotas(var tareas: ArrayList<Nota> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
+    class AdapterNotas(var tareas: ArrayList<Note> ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
 
         class ViewHolder(view:View): RecyclerView.ViewHolder(view){
             val titulo:TextView = view.findViewById(R.id.titulo)
@@ -107,8 +130,8 @@ class HomeFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
             val tarea = tareas[pos]
             holder.titulo.setText(tarea.titulo)
-            holder.contenido.setText(tarea.contenido)
-            holder.layoutNota.setBackgroundResource(tarea.background)
+            holder.contenido.setText(tarea.contenido?.substring(0, 20))
+            holder.layoutNota.setBackgroundResource(R.drawable.navyblue_note_background)
 
             holder.layoutNota.setOnClickListener{
 

@@ -96,13 +96,14 @@
                     android:src="@drawable/voice_line" />
 
                 <ImageButton
+                    android:id="@+id/btn_save"
                     android:layout_width="35dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="0dp"
                     android:background="@color/white"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/attachment_plus" />
+                    android:src="@drawable/baseline_save_24" />
 
                 <ImageButton
                     android:id="@+id/btn_photo"

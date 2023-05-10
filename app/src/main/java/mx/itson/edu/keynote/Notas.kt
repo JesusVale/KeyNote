@@ -10,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +35,8 @@ class Notas : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     lateinit var btn_camara: ImageButton
+    private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
+    private var imagen = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -50,6 +54,9 @@ class Notas : Fragment() {
             val myFragmentView: View? = inflater.inflate(R.layout.fragment_notas, container, false)
             val btn_camara: ImageButton = myFragmentView!!.findViewById(R.id.btn_photo)
             val btn_audio: ImageButton = myFragmentView!!.findViewById(R.id.btn_voice)
+            val btn_save: ImageButton = myFragmentView!!.findViewById(R.id.btn_save)
+            val tituloNota: EditText = myFragmentView!!.findViewById(R.id.tituloNota)
+            val contenidoNota: EditText = myFragmentView!!.findViewById(R.id.textoNota)
             imgView = myFragmentView!!.findViewById(R.id.iv_visor)
         btn_camara.setOnClickListener {
 //                    val fragmentManager=requireActivity().supportFragmentManager
@@ -60,6 +67,12 @@ class Notas : Fragment() {
             abrirCamara()
 
             }
+
+        btn_save.setOnClickListener{
+            var note: Note = Note(tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
+            guardarFirebase(note)
+        }
+
         btn_audio.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=AudioRecordFragment()
@@ -82,6 +95,11 @@ class Notas : Fragment() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             imgView.setImageBitmap(imageBitmap)
         }
+    }
+
+    private fun guardarFirebase(note: Note){
+        val userId= noteRef.push().key!!
+        noteRef.child(userId).setValue(note)
     }
 
     companion object {

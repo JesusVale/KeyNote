@@ -93,7 +93,5 @@ class registrar_usuario : AppCompatActivity() {
                 }
 
             }
-
-
     }
 }
