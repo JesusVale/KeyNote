@@ -86,17 +86,22 @@ class HomeFragment : Fragment() {
 
 
     private fun getNotas(){
-        Firebase.firestore.collection("Notes")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-
-                    tareas.add(Note(document.getString("titulo"), document.getString("contenido"), document.getString("tipo"), document.getString("imagen")))
-                }
-            }
-            .addOnFailureListener { exception ->
-
-            }
+        noteRef.get().addOnSuccessListener {
+            Log.i("firebase", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+//        Firebase.firestore.collection("Notes")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//
+//                    tareas.add(Note(document.getString("titulo"), document.getString("contenido"), document.getString("tipo"), document.getString("imagen")))
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//
+//            }
 
     }
 

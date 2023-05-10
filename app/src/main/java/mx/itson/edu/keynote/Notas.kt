@@ -69,8 +69,8 @@ class Notas : Fragment() {
             }
 
         btn_save.setOnClickListener{
-            var note: Note = Note(tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
-            guardarFirebase(note)
+            var nota: Note = Note(tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
+            guardarFirebase(nota)
         }
 
         btn_audio.setOnClickListener {
