@@ -1,6 +1,7 @@
 package mx.itson.edu.keynote
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,12 +13,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,10 +61,14 @@ class CalendarPlus : Fragment() {
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_calendar_plus, container, false)
         val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
         val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
+        val layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerHorarioL = myFragmentView!!.findViewById(R.id.recyclerClasesL)
+        recyclerHorarioL.layoutManager = layoutManager
         btn_add.setOnClickListener{
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=AgregarClaseFragment()
             val fragmentTransaction=fragmentManager.beginTransaction()
+
             btn_add.visibility = View.GONE
             btn_lupa.visibility = View.GONE
             fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
@@ -72,7 +84,16 @@ class CalendarPlus : Fragment() {
 
         }
 
+        CoroutineScope(Dispatchers.IO).launch {
+            // Small delay so the user can actually see the splash screen
+            // for a moment as feedback of an attempt to retrieve data.
+            delay(250)
+            getClases(fragmentManager)
+        }
 
+        val adapterClases: AdapterClases =
+            AdapterClases(clases, fragmentManager, this.resources)
+        recyclerHorarioL.adapter = adapterClases
 
 
         return myFragmentView
@@ -88,17 +109,26 @@ class CalendarPlus : Fragment() {
                 var mapValue: Map<String,Object> = value as Map<String, Object>
                 var titulo: String= mapValue.get("titulo").toString()
                 var info: String= mapValue.get("info").toString()
-                var dias = mapValue.get("dias")
-                var imagen: String= mapValue.get("image").toString()
+                var dias: ArrayList<String> = mapValue.get("dias") as ArrayList<String>
+                var horaMap: HashMap<String, Object> = mapValue.get("hora") as HashMap<String, Object>
+                val seconds: Long = horaMap.get("seconds") as Long
+                val nanoseconds: Long = horaMap.get("nanoseconds") as Long
+                var hora = Timestamp(seconds, nanoseconds.toInt())
+                var color: Long= mapValue.get("color") as Long
+                val clase = Clase(titulo, info, dias, hora, color.toInt())
+                clase.id = key
+                clases.add(clase)
+
+                Log.d("AAA", "${titulo}")
                 //val nuevaTarea = Note(titulo, contenido, tipo, imagen)
                 //nuevaTarea.id = key;
                 // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
                 //tareas.add(nuevaTarea)
             }
+            val adapterClases: AdapterClases =
+                AdapterClases(clases, manager, this.resources)
+            recyclerHorarioL.adapter = adapterClases
 
-            /*val adapterNotas: HomeFragment.AdapterNotas =
-                HomeFragment.AdapterNotas(tareas, myFragmentView!!.context, manager)
-            recyclerHorario.adapter = adapterNotas*/
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
@@ -106,7 +136,7 @@ class CalendarPlus : Fragment() {
     }
 
 
-    class AdapterClases(var clases: ArrayList<Clase>, var fragmentos: FragmentManager): RecyclerView.Adapter<CalendarPlus.AdapterClases.ViewHolder>(){
+    class AdapterClases(var clases: ArrayList<Clase>, var fragmentos: FragmentManager, var recusos: Resources): RecyclerView.Adapter<CalendarPlus.AdapterClases.ViewHolder>(){
 
         class ViewHolder(view:View): RecyclerView.ViewHolder(view){
             val textoClase: TextView = view.findViewById(R.id.textoClase)
@@ -131,12 +161,14 @@ class CalendarPlus : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
             val clase = clases[pos]
-
             val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
 
             val texto: String = "${sdf.format(clase.hora.toDate())} ${clase.titulo}"
 
-            holder.textoClase.setBackgroundColor(clase.color)
+            holder.textoClase.setText(texto)
+            Log.d("colorGuardado", "${clase.color}")
+            Log.d("color", "${R.color.blue}")
+            holder.textoClase.setBackgroundColor(recusos.getColor(clase.color))
 
             holder.textoClase.setOnClickListener{
                 val bundle = Bundle()

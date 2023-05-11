@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.Timestamp
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDateTime
@@ -29,6 +31,7 @@ class AgregarClaseFragment : Fragment() {
     private val claseRef= FirebaseDatabase.getInstance().getReference("Clases")
     private var diasSeleccionados: ArrayList<String> = ArrayList()
     private var colorSeleccionado: Int = 0
+    private var editMode:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,6 +47,7 @@ class AgregarClaseFragment : Fragment() {
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_agregar_clase, container, false)
         val btn_plus: ImageButton = myFragmentView!!.findViewById(R.id.btnPlus)
         val btn_delete: ImageButton = myFragmentView!!.findViewById(R.id.btnX)
+        val btn_deleteClase: Button = myFragmentView!!.findViewById(R.id.btn_deleteClase)
         val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
         val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
         val tituloClase: EditText =myFragmentView!!.findViewById(R.id.tituloTxt)
@@ -55,6 +59,15 @@ class AgregarClaseFragment : Fragment() {
         val fechaTxt: TimePicker = myFragmentView!!.findViewById(R.id.fechaTxt)
         val colores: RadioGroup = myFragmentView!!.findViewById(R.id.colores)
         val infoClase: EditText = myFragmentView!!.findViewById(R.id.infoTxt)
+
+        if(arguments != null){
+
+            //TODO Agregar los datos de la clase seleccionada
+            btn_deleteClase.visibility = View.VISIBLE
+            editMode = true
+        }
+
+
         btn_plus.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=CalendarPlus()
@@ -65,13 +78,27 @@ class AgregarClaseFragment : Fragment() {
             val timestamp = Timestamp(nowDate)
 
             val clase: Clase = Clase(tituloClase.text.toString(), infoClase.text.toString(), diasSeleccionados, timestamp, colorSeleccionado)
-            guardarClaseFirebase(clase)
+
+            if(editMode){
+                val id = requireArguments().getString("id")
+                clase.id = id
+                actualizarClaseFirebase(clase)
+            } else{
+                guardarClaseFirebase(clase)
+            }
+
 
             btn_add.visibility = View.VISIBLE
             btn_lupa.visibility = View.VISIBLE
             fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
             fragmentTransaction.commit();
         }
+
+        btn_deleteClase.setOnClickListener{
+            val id: String? = requireArguments().getString("id")
+            eliminarFirebase(id)
+        }
+
         btn_delete.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=CalendarPlus()
@@ -158,6 +185,34 @@ class AgregarClaseFragment : Fragment() {
         claseRef.child(userId).setValue(clase)
         Toast.makeText(this.context, "Se guardó la clase correctamente", Toast.LENGTH_SHORT)
             .show()
+    }
+
+    private fun actualizarClaseFirebase(clase: Clase){
+        val nuevosValores = mapOf(
+            "titulo" to clase.titulo,
+            "info" to clase.info,
+            "hora" to clase.hora,
+            "dias" to clase.dias,
+            "color" to clase.color
+        )
+        claseRef.child(clase.id!!).setValue(nuevosValores)
+        Toast.makeText(this.context, "Se guardaron los cambios correctamente", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun eliminarFirebase(id:String?){
+        claseRef.child(id!!).removeValue()
+        Toast.makeText(this.context, "Se eliminó la clase correctamente", Toast.LENGTH_SHORT)
+            .show()
+        val fragment: Fragment = CalendarPlus()
+        replaceFragment(fragment)
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = parentFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 
     companion object {

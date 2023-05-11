@@ -274,6 +274,15 @@
                 android:paddingVertical="7dp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_deleteClase"
+            android:layout_width="171dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:text="Eliminar" />
+
     </LinearLayout>
 
 </FrameLayout>
