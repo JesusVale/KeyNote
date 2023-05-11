@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,9 +38,9 @@ class Notas : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var btn_camara: ImageButton
     private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
     private var imagen = null
+    private var editMode:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -51,13 +55,25 @@ class Notas : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-            val myFragmentView: View? = inflater.inflate(R.layout.fragment_notas, container, false)
-            val btn_camara: ImageButton = myFragmentView!!.findViewById(R.id.btn_photo)
-            val btn_audio: ImageButton = myFragmentView!!.findViewById(R.id.btn_voice)
-            val btn_save: ImageButton = myFragmentView!!.findViewById(R.id.btn_save)
-            val tituloNota: EditText = myFragmentView!!.findViewById(R.id.tituloNota)
-            val contenidoNota: EditText = myFragmentView!!.findViewById(R.id.textoNota)
-            imgView = myFragmentView!!.findViewById(R.id.iv_visor)
+        val myFragmentView: View? = inflater.inflate(R.layout.fragment_notas, container, false)
+        val btn_camara: ImageButton = myFragmentView!!.findViewById(R.id.btn_photo)
+        val btn_audio: ImageButton = myFragmentView!!.findViewById(R.id.btn_voice)
+        val btn_save: ImageButton = myFragmentView!!.findViewById(R.id.btn_save)
+        val btn_delete: Button = myFragmentView!!.findViewById(R.id.btn_delete)
+        val tituloNota: EditText = myFragmentView!!.findViewById(R.id.tituloNota)
+        val contenidoNota: EditText = myFragmentView!!.findViewById(R.id.textoNota)
+        imgView = myFragmentView!!.findViewById(R.id.iv_visor)
+
+        if(arguments != null){
+            val titulo = requireArguments().getString("titulo")
+            val contenido = requireArguments().getString("contenido")
+            val imagen = requireArguments().getString("imagen")
+            tituloNota.setText(titulo)
+            contenidoNota.setText(contenido)
+            btn_delete.visibility = View.VISIBLE
+            editMode = true
+        }
+
         btn_camara.setOnClickListener {
 //                    val fragmentManager=requireActivity().supportFragmentManager
 //                    val segundoFragmento=CamaraFragment()
@@ -66,11 +82,23 @@ class Notas : Fragment() {
 //                    fragmentTransaction.commit()
             abrirCamara()
 
-            }
+        }
 
         btn_save.setOnClickListener{
             var nota: Note = Note(tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
-            guardarFirebase(nota)
+            if(editMode){
+                val id = requireArguments().getString("id")
+                nota.id = id
+                editarFirebase(nota)
+            } else{
+                guardarFirebase(nota)
+            }
+
+        }
+
+        btn_delete.setOnClickListener{
+            val id: String? = requireArguments().getString("id")
+            eliminarFirebase(id)
         }
 
         btn_audio.setOnClickListener {
@@ -100,6 +128,33 @@ class Notas : Fragment() {
     private fun guardarFirebase(note: Note){
         val userId= noteRef.push().key!!
         noteRef.child(userId).setValue(note)
+        Toast.makeText(this.context, "Se guardó la nota correctamente", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    private fun eliminarFirebase(id:String?){
+        noteRef.child(id!!).removeValue()
+        Toast.makeText(this.context, "Se eliminó la nota correctamente", Toast.LENGTH_SHORT)
+            .show()
+        val fragment: Fragment = HomeFragment()
+        replaceFragment(fragment)
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = parentFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private fun editarFirebase(note: Note){
+        val nuevosValores = mapOf(
+            "titulo" to note.titulo,
+            "contenido" to note.contenido
+        )
+        noteRef.child(note.id!!).setValue(nuevosValores)
+        Toast.makeText(this.context, "Se guardaron los cambios correctamente", Toast.LENGTH_SHORT)
+            .show()
     }
 
     companion object {
