@@ -100,13 +100,18 @@ class AgregarClaseFragment : Fragment() {
         }
 
         btn_delete.setOnClickListener {
-            val fragmentManager=requireActivity().supportFragmentManager
+            /*val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=CalendarPlus()
-            val fragmentTransaction=fragmentManager.beginTransaction()
+            val fragmentTransaction=fragmentManager.beginTransaction()*/
             btn_add.visibility = View.VISIBLE
             btn_lupa.visibility = View.VISIBLE
-            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
-            fragmentTransaction.commit();
+            if(editMode){
+                val id: String? = requireArguments().getString("id")
+                eliminarFirebase(id)
+            }
+
+           /* fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
+            fragmentTransaction.commit();*/
         }
 
         checkBoxL.setOnCheckedChangeListener{ _, isChecked ->
