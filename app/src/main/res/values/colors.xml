@@ -9,11 +9,16 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="grayTextField">#D9D9D9</color>
-    <color name="purpleButton">#C490EC</color>
     <color name="grayDark">#4C4C4C</color>
     <color name="searchViewBackground">#F4F4F4</color>
+    <color name="purpleButton">#C490EC</color>
     <color name="recordRed">#FF6F6F</color>
     <color name="blue">#38B9F1</color>
     <color name="green">#6EE06B</color>
-    <color name="yellowButton">#F3E081</color>
+    <color name="yellowButton">#F8E175</color>
+    <color name="purpleSelected">#7C5B95</color>
+    <color name="recordRedSelected">#9A4242</color>
+    <color name="blueSelected">#1A5873</color>
+    <color name="greenSelected">#3B7839</color>
+    <color name="yellowSelected">#756C3E</color>
 </resources>

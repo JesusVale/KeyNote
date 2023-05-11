@@ -1,5 +1,6 @@
 package mx.itson.edu.keynote
 
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.forEach
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.Timestamp
@@ -76,22 +78,35 @@ class AgregarClaseFragment : Fragment() {
             val nowDate = now.toDate()
             nowDate.hours = fechaTxt.hour
             val timestamp = Timestamp(nowDate)
+            //validar datos
+            var titulo=tituloClase.text.toString()
+            var info=infoClase.text.toString()
 
-            val clase: Clase = Clase(tituloClase.text.toString(), infoClase.text.toString(), diasSeleccionados, timestamp, colorSeleccionado)
+            if(titulo.length>=1||colorSeleccionado!=0){
+                val clase: Clase = Clase(tituloClase.text.toString(), infoClase.text.toString(), diasSeleccionados, timestamp, colorSeleccionado)
+                if(editMode){
+                    val id = requireArguments().getString("id")
+                    clase.id = id
+                    actualizarClaseFirebase(clase)
+                } else{
 
-            if(editMode){
-                val id = requireArguments().getString("id")
-                clase.id = id
-                actualizarClaseFirebase(clase)
-            } else{
-                guardarClaseFirebase(clase)
+                    guardarClaseFirebase(clase)
+                }
+
+                btn_add.visibility = View.VISIBLE
+                btn_lupa.visibility = View.VISIBLE
+                fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
+                fragmentTransaction.commit();
+            }else{
+                Toast.makeText(this.context, "No coloco un titulo o no selecciono un color", Toast.LENGTH_SHORT)
+                    .show()
             }
 
 
-            btn_add.visibility = View.VISIBLE
-            btn_lupa.visibility = View.VISIBLE
-            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
-            fragmentTransaction.commit();
+
+
+
+
         }
 
         btn_deleteClase.setOnClickListener{
@@ -164,22 +179,58 @@ class AgregarClaseFragment : Fragment() {
             val radioButton: RadioButton = myFragmentView.findViewById(checkedId)
             when(radioButton.tag){
                 "r"->{
+                    radioButton.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.recordRedSelected))
                     colorSeleccionado = R.color.recordRed
                 }
                 "g"->{
+                    radioButton.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.greenSelected))
                     colorSeleccionado = R.color.green
                 }
                 "b"->{
+                    radioButton.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.blueSelected))
                     colorSeleccionado = R.color.blue
                 }
                 "p"->{
+                    radioButton.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.purpleSelected))
                     colorSeleccionado = R.color.purpleButton
                 }
                 "y"->{
+                    radioButton.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.yellowSelected))
                     colorSeleccionado = R.color.yellowButton
                 }
+
             }
 
+            group.forEach { view ->
+                if (view is RadioButton) {
+                    if(!view.isChecked){
+                        when(view.tag){
+                            "r"->{
+                                view.backgroundTintList= ColorStateList.valueOf(getResources().getColor(R.color.recordRed))
+
+                            }
+                            "g"->{
+                                view.backgroundTintList= ColorStateList.valueOf(getResources().getColor(R.color.green))
+
+                            }
+                            "b"->{
+                                view.backgroundTintList= ColorStateList.valueOf(getResources().getColor(R.color.blue))
+
+                            }
+                            "p"->{
+                                view.backgroundTintList= ColorStateList.valueOf(getResources().getColor(R.color.purpleButton))
+
+                            }
+                            "y"->{
+                                view.backgroundTintList= ColorStateList.valueOf(getResources().getColor(R.color.yellowButton))
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
         }
         return myFragmentView
     }
