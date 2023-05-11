@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -22,26 +22,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-20dp"
-                android:src="@drawable/material_symbols_close"
-                />
+                android:src="@drawable/material_symbols_close" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Agregar clase"
-                android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/grayDark"
                 android:layout_marginLeft="15dp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:text="Agregar clase"
+                android:textColor="@color/grayDark"
+                android:textSize="20dp" />
 
             <ImageButton
                 android:id="@+id/btnPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add"
                 android:layout_marginLeft="15dp"
-                />
+                android:src="@drawable/add" />
 
         </LinearLayout>
 
@@ -76,12 +74,13 @@
                 android:layout_marginRight="55dp"
                 >
 
-                <RadioGroup
+                <LinearLayout
                     android:id="@+id/dias"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/lunes"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:text="L"
@@ -90,7 +89,8 @@
                         android:background="@drawable/rounded_textfield"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/martes"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:text="M"
@@ -100,7 +100,8 @@
                         android:background="@drawable/rounded_textfield"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/miercoles"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:text="Mi"
@@ -110,7 +111,8 @@
                         android:background="@drawable/rounded_textfield"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/jueves"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:text="J"
@@ -120,7 +122,8 @@
                         android:background="@drawable/rounded_textfield"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/viernes"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:text="V"
@@ -131,7 +134,7 @@
                         android:textSize="20dp"
                         android:textStyle="bold"/>
 
-                </RadioGroup>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -142,16 +145,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="55dp"
                 android:layout_marginRight="55dp"
+                android:layout_marginVertical="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:textSize="20dp"
-                    android:textAlignment="center"
+                    android:gravity="center_vertical"
                     android:text="Hora"/>
 
-                <EditText
+                <TimePicker
+                    android:id="@+id/fechaTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="135dp"
+                    android:timePickerMode="spinner" />
+
+                <!--<EditText
                     android:id="@+id/fechaTxt"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -165,7 +175,7 @@
                     android:inputType="date"
                     android:paddingHorizontal="30dp"
                     android:paddingVertical="7dp"
-                    />
+                    />-->
 
             </LinearLayout>
             <LinearLayout
@@ -197,6 +207,7 @@
                         android:background="@drawable/red_note_background"
                         app:backgroundTint="@color/recordRed"
                         android:textSize="20dp"
+                        android:tag="r"
                         android:textStyle="bold"/>
                     <RadioButton
                         android:layout_width="35dp"
@@ -208,6 +219,7 @@
                         android:background="@drawable/blue_note_background"
                         app:backgroundTint="@color/blue"
                         android:textSize="20dp"
+                        android:tag="b"
                         android:textStyle="bold"/>
                     <RadioButton
                         android:layout_width="35dp"
@@ -217,6 +229,7 @@
                         android:button="@android:color/transparent"
                         android:background="@drawable/green_note_background"
                         app:backgroundTint="@color/green"
+                        android:tag="g"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
                     <RadioButton
@@ -228,6 +241,7 @@
                         android:background="@drawable/red_note_background"
                         app:backgroundTint="@color/purple_200"
                         android:textSize="20dp"
+                        android:tag="p"
                         android:textStyle="bold"/>
                     <RadioButton
                         android:layout_width="35dp"
@@ -238,6 +252,7 @@
                         android:background="@drawable/red_note_background"
                         app:backgroundTint="@color/yellowButton"
                         android:textSize="20dp"
+                        android:tag="y"
                         android:textStyle="bold"/>
 
                 </RadioGroup>
@@ -247,7 +262,7 @@
             <EditText
                 android:id="@+id/infoTxt"
                 android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_height="219dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"

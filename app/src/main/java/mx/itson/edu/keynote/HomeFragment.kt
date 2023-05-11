@@ -65,7 +65,6 @@ class HomeFragment : Fragment() {
         var fragmentManager: FragmentManager = this.parentFragmentManager
 
         if (this.isAdded()) {
-            Log.d("Holaaa", " yayayya")
             // El fragmento está asociado con un FragmentManager, es seguro acceder a él
             fragmentManager = this.parentFragmentManager
         } else {

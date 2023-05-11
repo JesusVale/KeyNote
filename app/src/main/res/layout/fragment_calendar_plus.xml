@@ -25,41 +25,23 @@
             android:layout_marginBottom="20dp"
             android:text="Lunes" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#164080"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:paddingVertical="17dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginHorizontal="15dp"
-                android:text="9:00 - 10:00 Fotografia"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#8FA9D0"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:paddingVertical="17dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginHorizontal="15dp"
-                android:text="Receso"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/recyclerClasesL" />
 
             </LinearLayout>
 
 
-        </HorizontalScrollView>
+
 
         <TextView
             android:layout_width="match_parent"
