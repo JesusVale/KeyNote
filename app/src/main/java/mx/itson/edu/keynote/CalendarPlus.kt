@@ -43,7 +43,12 @@ class CalendarPlus : Fragment() {
     private var param2: String? = null
     private val claseRef= FirebaseDatabase.getInstance().getReference("Clases")
     lateinit var recyclerHorarioL:RecyclerView
+    lateinit var recyclerHorarioM:RecyclerView
+    lateinit var recyclerHorarioMi:RecyclerView
+    lateinit var recyclerHorarioJ:RecyclerView
+    lateinit var recyclerHorarioV:RecyclerView
     var clases: ArrayList<Clase> = ArrayList<Clase>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +66,21 @@ class CalendarPlus : Fragment() {
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_calendar_plus, container, false)
         val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
         val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
-        val layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerL = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerM = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerMi = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerJ = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerV = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerHorarioL = myFragmentView!!.findViewById(R.id.recyclerClasesL)
-        recyclerHorarioL.layoutManager = layoutManager
+        recyclerHorarioM = myFragmentView!!.findViewById(R.id.recyclerClasesM)
+        recyclerHorarioMi = myFragmentView!!.findViewById(R.id.recyclerClasesMi)
+        recyclerHorarioJ = myFragmentView!!.findViewById(R.id.recyclerClasesJ)
+        recyclerHorarioV = myFragmentView!!.findViewById(R.id.recyclerClasesV)
+        recyclerHorarioL.layoutManager = layoutManagerL
+        recyclerHorarioM.layoutManager = layoutManagerM
+        recyclerHorarioMi.layoutManager = layoutManagerMi
+        recyclerHorarioJ.layoutManager = layoutManagerJ
+        recyclerHorarioV.layoutManager = layoutManagerV
         btn_add.setOnClickListener{
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=AgregarClaseFragment()
@@ -88,7 +105,10 @@ class CalendarPlus : Fragment() {
             // Small delay so the user can actually see the splash screen
             // for a moment as feedback of an attempt to retrieve data.
             delay(250)
-            getClases(fragmentManager)
+            if(isAdded){
+                getClases(fragmentManager)
+            }
+
         }
 
         val adapterClases: AdapterClases =
@@ -101,6 +121,13 @@ class CalendarPlus : Fragment() {
 
 
     private suspend fun getClases(manager: FragmentManager){
+
+        var clasesL: ArrayList<Clase> = ArrayList<Clase>()
+        var clasesM: ArrayList<Clase> = ArrayList<Clase>()
+        var clasesMi: ArrayList<Clase> = ArrayList<Clase>()
+        var clasesJ: ArrayList<Clase> = ArrayList<Clase>()
+        var clasesV: ArrayList<Clase> = ArrayList<Clase>()
+
         var task=claseRef.get().addOnSuccessListener {
 
             var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
@@ -117,7 +144,27 @@ class CalendarPlus : Fragment() {
                 var color: Long= mapValue.get("color") as Long
                 val clase = Clase(titulo, info, dias, hora, color.toInt())
                 clase.id = key
-                clases.add(clase)
+                if (dias != null) {
+                    for (dia in dias){
+                        when(dia){
+                            "L"->{
+                                clasesL.add(clase)
+                            }
+                            "M"->{
+                                clasesM.add(clase)
+                            }
+                            "Mi"->{
+                                clasesMi.add(clase)
+                            }
+                            "J"->{
+                                clasesJ.add(clase)
+                            }
+                            "V"->{
+                                clasesV.add(clase)
+                            }
+                        }
+                    }
+                }
 
                 Log.d("AAA", "${titulo}")
                 //val nuevaTarea = Note(titulo, contenido, tipo, imagen)
@@ -125,9 +172,21 @@ class CalendarPlus : Fragment() {
                 // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
                 //tareas.add(nuevaTarea)
             }
-            val adapterClases: AdapterClases =
-                AdapterClases(clases, manager, this.resources)
-            recyclerHorarioL.adapter = adapterClases
+            val adapterClasesL: AdapterClases =
+                AdapterClases(clasesL, manager, this.resources)
+            val adapterClasesM: AdapterClases =
+                AdapterClases(clasesM, manager, this.resources)
+            val adapterClasesMi: AdapterClases =
+                AdapterClases(clasesMi, manager, this.resources)
+            val adapterClasesJ: AdapterClases =
+                AdapterClases(clasesJ, manager, this.resources)
+            val adapterClasesV: AdapterClases =
+                AdapterClases(clasesV, manager, this.resources)
+            recyclerHorarioL.adapter = adapterClasesL
+            recyclerHorarioM.adapter = adapterClasesM
+            recyclerHorarioMi.adapter = adapterClasesMi
+            recyclerHorarioJ.adapter = adapterClasesJ
+            recyclerHorarioV.adapter = adapterClasesV
 
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
@@ -173,7 +232,11 @@ class CalendarPlus : Fragment() {
             holder.textoClase.setOnClickListener{
                 val bundle = Bundle()
                 bundle.putString("id", clase.id)
-
+                bundle.putString("titulo", clase.titulo)
+                bundle.putString("info", clase.info)
+                bundle.putInt("color", clase.color)
+                bundle.putStringArrayList("dias", clase.dias)
+                bundle.putSerializable("hora", clase.hora.toDate())
                 val fragment = AgregarClaseFragment()
 
                 fragment.arguments = bundle

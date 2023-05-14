@@ -3,6 +3,7 @@ package mx.itson.edu.keynote
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,6 @@ class AgregarClaseFragment : Fragment() {
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_agregar_clase, container, false)
         val btn_plus: ImageButton = myFragmentView!!.findViewById(R.id.btnPlus)
         val btn_delete: ImageButton = myFragmentView!!.findViewById(R.id.btnX)
-        val btn_deleteClase: Button = myFragmentView!!.findViewById(R.id.btn_deleteClase)
         val btn_add: ImageView = requireActivity().findViewById(R.id.addIcon)
         val btn_lupa: ImageView = requireActivity().findViewById(R.id.search_icon)
         val tituloClase: EditText =myFragmentView!!.findViewById(R.id.tituloTxt)
@@ -63,10 +63,75 @@ class AgregarClaseFragment : Fragment() {
         val infoClase: EditText = myFragmentView!!.findViewById(R.id.infoTxt)
 
         if(arguments != null){
-
-            //TODO Agregar los datos de la clase seleccionada
-            btn_deleteClase.visibility = View.VISIBLE
             editMode = true
+
+            val titulo = requireArguments().getString("titulo")
+            val info = requireArguments().getString("info")
+            val color = requireArguments().getInt("color")
+            val dias = requireArguments().getStringArrayList("dias")
+            val hora = requireArguments().getSerializable("hora") as java.util.Date
+            tituloClase.setText(titulo)
+            infoClase.setText(info)
+            //Manejar Checkbox
+            if (dias != null) {
+                for (dia in dias){
+                    when(dia){
+                        "L"->{
+                            checkBoxL.isChecked = true
+                            checkBoxL.setBackgroundResource(R.drawable.navyblue_note_background)
+                        }
+                        "M"->{
+                            checkBoxM.isChecked = true
+                            checkBoxM.setBackgroundResource(R.drawable.navyblue_note_background)
+                        }
+                        "Mi"->{
+                            checkBoxMi.isChecked = true
+                            checkBoxMi.setBackgroundResource(R.drawable.navyblue_note_background)
+                        }
+                        "J"->{
+                            checkBoxJ.isChecked = true
+                            checkBoxJ.setBackgroundResource(R.drawable.navyblue_note_background)
+                        }
+                        "V"->{
+                            checkBoxV.isChecked = true
+                            checkBoxV.setBackgroundResource(R.drawable.navyblue_note_background)
+                        }
+                    }
+                }
+            }
+            //
+            when(color){
+                R.color.recordRed->{
+                    val radio: RadioButton = myFragmentView!!.findViewById(R.id.rRadio)
+                    radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.recordRedSelected))
+                    radio.isChecked = true
+                }
+                R.color.green->{
+                    val radio: RadioButton = myFragmentView!!.findViewById(R.id.gRadio)
+                    radio.isChecked = true
+                    radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.greenSelected))
+                }
+                R.color.blue->{
+                    val radio: RadioButton = myFragmentView!!.findViewById(R.id.bRadio)
+                    radio.isChecked = true
+                    radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.blueSelected))
+                }
+                R.color.purpleButton->{
+                    val radio: RadioButton = myFragmentView!!.findViewById(R.id.pRadio)
+                    radio.isChecked = true
+                    radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.purpleSelected))
+                }
+                R.color.yellowButton->{
+                    val radio: RadioButton = myFragmentView!!.findViewById(R.id.yRadio)
+                    radio.isChecked = true
+                    radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.yellowSelected))
+                }
+            }
+
+
+            fechaTxt.hour = hora.hours
+            fechaTxt.minute = hora.minutes
+
         }
 
 
@@ -77,6 +142,7 @@ class AgregarClaseFragment : Fragment() {
             val now = Timestamp.now()
             val nowDate = now.toDate()
             nowDate.hours = fechaTxt.hour
+            nowDate.minutes = fechaTxt.minute
             val timestamp = Timestamp(nowDate)
             //validar datos
             var titulo=tituloClase.text.toString()
@@ -101,17 +167,6 @@ class AgregarClaseFragment : Fragment() {
                 Toast.makeText(this.context, "No coloco un titulo o no selecciono un color", Toast.LENGTH_SHORT)
                     .show()
             }
-
-
-
-
-
-
-        }
-
-        btn_deleteClase.setOnClickListener{
-            val id: String? = requireArguments().getString("id")
-            eliminarFirebase(id)
         }
 
         btn_delete.setOnClickListener {

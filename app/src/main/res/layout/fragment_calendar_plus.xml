@@ -52,30 +52,19 @@
             android:layout_marginVertical="20dp"
             android:text="Martes" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/recyclerClasesM" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#164080"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:paddingVertical="17dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="9:00 - 10:00 Fotografia"/>
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -86,30 +75,21 @@
             android:layout_marginVertical="20dp"
             android:text="Miércoles" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/recyclerClasesMi" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#164080"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:paddingVertical="17dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="9:00 - 10:00 Fotografia"/>
+        </LinearLayout>
 
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
 
         <TextView
             android:layout_width="match_parent"
@@ -120,30 +100,18 @@
             android:layout_marginVertical="20dp"
             android:text="Jueves" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/recyclerClasesJ" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#164080"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:paddingVertical="17dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="9:00 - 10:00 Fotografia"/>
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -154,30 +122,21 @@
             android:layout_marginVertical="20dp"
             android:text="Viernes" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/recyclerClasesV" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#164080"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:paddingVertical="17dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="9:00 - 10:00 Fotografia"/>
+        </LinearLayout>
 
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
 
 
     </LinearLayout>

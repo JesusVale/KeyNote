@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -126,10 +128,20 @@ class Notas : Fragment() {
     }
 
     private fun guardarFirebase(note: Note){
-        val userId= noteRef.push().key!!
-        noteRef.child(userId).setValue(note)
-        Toast.makeText(this.context, "Se guardó la nota correctamente", Toast.LENGTH_SHORT)
-            .show()
+        /*val userId= noteRef.push().key!!
+        noteRef.child(userId).setValue(note)*/
+        val db = Firebase.firestore
+        val collection = db.collection("Notes")
+        collection.add(note)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this.context, "Se guardó la nota correctamente", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this.context, "No se pudo guardar la nota correctamente", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
     }
 
     private fun eliminarFirebase(id:String?){

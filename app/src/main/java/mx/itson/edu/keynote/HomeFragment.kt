@@ -15,10 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 
@@ -36,9 +35,7 @@ class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var tareas: ArrayList<Note> = ArrayList<Note>()
     private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
-    private lateinit var infiniteViewPager: ViewPager2
     lateinit var recyclerHorario:RecyclerView
     var myFragmentView: View? = null
 
@@ -79,55 +76,60 @@ class HomeFragment : Fragment() {
         recyclerUltimas.setLayoutManager(layoutManagerUltimas)
         recyclerFijadas.setLayoutManager(layoutManagerFijadas)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            // Small delay so the user can actually see the splash screen
-            // for a moment as feedback of an attempt to retrieve data.
-            delay(250)
-            getNotas(fragmentManager)
+
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val notas = getNotas()
+            val adapterNotas:AdapterNotas = AdapterNotas(notas, myFragmentView!!.context, fragmentManager)
+            recyclerHorario.adapter = adapterNotas
         }
 
-        Log.d("Total de tareas ea", "${tareas.size}")
-        val adapterNotas:AdapterNotas = AdapterNotas(tareas, myFragmentView!!.context, fragmentManager)
-        recyclerHorario.adapter = adapterNotas
-        recyclerUltimas.adapter = adapterNotas
-        recyclerFijadas.adapter = adapterNotas
-
-        // Inflate the layout for this fragment
         return myFragmentView
     }
-
-    /*fun agregarNotas(){
-        tareas.add(Nota("1:00 - 2:00 Ejercicio", "Tu me dices que no tienes ritmo, pues mira lo que acabas de hacer, yo ya tengo un trabajo muy bueno", R.drawable.navyblue_note_background))
-        tareas.add(Nota("10:00 - 12:00 Tarea", "Matematicas Realizar los siguientes ejercicios...", R.drawable.blue_note_background))
-        tareas.add(Nota("11:00 - 12:00 Dibujo", "EOOOOO E000 EEO EEO EEEEO EEEEE0 EO EO EO EO ALL RIGHT ALL RIGHT!!", R.drawable.orange_note_background))
-        tareas.add(Nota("3:00 - 4:00 Canto", "Que sepa el mundo que en marcha estoy, que voy a cumplir mi misión", R.drawable.red_note_background))
-    }*/
+    
+    private suspend fun getNotas(): ArrayList<Note> = withContext(Dispatchers.Main) {
 
 
-    private suspend fun getNotas(manager: FragmentManager){
-        var task=noteRef.get().addOnSuccessListener {
+        var notas: ArrayList<Note> = ArrayList()
 
-            var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
-            var mapKeys: Set<String> = mapNotes.keys
-            for ((key,value) in mapNotes) {
-                var mapValue: Map<String,Object> = value as Map<String, Object>
-                var titulo: String= mapValue.get("titulo").toString()
-                var contenido: String= mapValue.get("contenido").toString()
-                var tipo: String= mapValue.get("tipo").toString()
-                var imagen: String= mapValue.get("image").toString()
-                val nuevaTarea = Note(titulo, contenido, tipo, imagen)
-                nuevaTarea.id = key;
-                // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
-                tareas.add(nuevaTarea)
-            }
+        val it = noteRef.get().await()
+        var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
 
-            val adapterNotas:AdapterNotas = AdapterNotas(tareas, myFragmentView!!.context, manager)
-            recyclerHorario.adapter = adapterNotas
-        }.addOnFailureListener{
-            Log.e("firebase", "Error getting data", it)
+
+        for ((key,value) in mapNotes){
+            var mapValue: Map<String,Object> = value as Map<String, Object>
+            var titulo: String= mapValue.get("titulo").toString()
+            var contenido: String= mapValue.get("contenido").toString()
+            var tipo: String= mapValue.get("tipo").toString()
+            var imagen: String= mapValue.get("image").toString()
+            val nuevaTarea = Note(titulo, contenido, tipo, imagen)
+            nuevaTarea.id = key;
+            // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
+            notas.add(nuevaTarea)
         }
-        task.await()
+
+        /*val db = Firebase.firestore
+        val collection = db.collection("Notes")
+        val querySnapshot = collection.get().await()
+        var notas: ArrayList<Note> = ArrayList()
+        for (document in querySnapshot) {
+            Log.d("TAG", "${document.id} => ${document.data}")
+            val mapValue: Map<String, Any> = document.data
+            var titulo: String= mapValue.get("titulo").toString()
+            var contenido: String= mapValue.get("contenido").toString()
+            var tipo: String= mapValue.get("tipo").toString()
+            var imagen: String= mapValue.get("image").toString()
+            val note = Note(titulo, contenido, tipo, imagen)
+            note.id = document.id;
+            notas.add(note)
+        }
+
+
+        notas*/
+        notas
     }
+
+
 
     class AdapterNotas(var tareas: ArrayList<Note>, var contexto:Context, var fragmentos: FragmentManager ): RecyclerView.Adapter<HomeFragment.AdapterNotas.ViewHolder>(){
 
@@ -177,6 +179,7 @@ class HomeFragment : Fragment() {
                 val fragment = Notas()
 
                 fragment.arguments = bundle
+                holder.layoutNota.setBackgroundResource(R.color.blueSelected)
                 val fragmentTransaction: FragmentTransaction = fragmentos.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.commit();
