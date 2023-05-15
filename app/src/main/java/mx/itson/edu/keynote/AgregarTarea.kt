@@ -49,7 +49,7 @@ class AgregarTarea : Fragment() {
     private var clasesSeleccionados: ArrayList<String> = ArrayList<String>()
     private var clasesSelecTitulo: ArrayList<String> = ArrayList<String>()
     private lateinit var recyclerClasesTarea: RecyclerView
-    private lateinit var btn_mostrarFecha: Button
+    private lateinit var btn_mostrarFecha: TextView
     private lateinit var fechaSeleccionada:Timestamp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,22 +207,9 @@ class AgregarTarea : Fragment() {
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val timePickerDialog = TimePickerDialog(
-                    this.requireContext(),
-                    { _, hourOfDay, minute ->
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                        calendar.set(Calendar.MINUTE, minute)
-                        // Aquí puedes realizar alguna acción con la fecha y hora seleccionadas
-                        // Por ejemplo, mostrar la fecha y hora en un TextView
-                        fechaSeleccionada = Timestamp(calendar.timeInMillis / 1000, 0)
-                        val fechaHoraSeleccionada = SimpleDateFormat("dd/MM", Locale.getDefault()).format(calendar.time)
-                        btn_mostrarFecha.text = fechaHoraSeleccionada
-                    },
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE),
-                    true
-                )
-                timePickerDialog.show()
+                fechaSeleccionada = Timestamp(calendar.timeInMillis / 1000, 0)
+                val fechaHoraSeleccionada = SimpleDateFormat("dd/MM", Locale.getDefault()).format(calendar.time)
+                btn_mostrarFecha.text = fechaHoraSeleccionada
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),

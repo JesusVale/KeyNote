@@ -39,44 +39,19 @@
 
         </LinearLayout>
 
-        <HorizontalScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/recyclerTareasProximas" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/red_note_background"
-                    android:padding="15dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="Avance tesis" />
-
-                    <TextView
-                        android:layout_width="170dp"
-                        android:layout_height="90dp"
-                        android:textColor="@color/white"
-                        android:text="lorem que sepa el mundo que en marcha estoy, que xdxdxdxd cmssijf ifsifssfs sfisdo uogiiygy gygyfj"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+        </LinearLayout>
 
 
         <LinearLayout
@@ -98,71 +73,27 @@
                 android:textSize="18sp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Media" />
+                android:text="Demas" />
 
         </LinearLayout>
 
-        <HorizontalScrollView
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/recyclerTareasDemas" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/orange_note_background"
-                    android:padding="15dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="Avance tesis" />
 
-                    <TextView
-                        android:layout_width="170dp"
-                        android:layout_height="90dp"
-                        android:textColor="@color/white"
-                        android:text="lorem que sepa el mundo que en marcha estoy, que xdxdxdxd cmssijf ifsifssfs sfisdo uogiiygy gygyfj"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/orange_note_background"
-                    android:padding="15dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="Editar video TV" />
-
-                    <TextView
-                        android:layout_width="170dp"
-                        android:layout_height="90dp"
-                        android:textColor="@color/white"
-                        android:text="lorem que sepa el mundo que en marcha estoy, que xdxdxdxd cmssijf ifsifssfs sfisdo uogiiygy gygyfj"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
 
         <LinearLayout
             android:layout_width="191dp"
@@ -180,50 +111,30 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Realizados" />
+                android:text="Pasadas"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <HorizontalScrollView
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/recyclerTareasPasadas" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/green_note_background"
-                    android:padding="15dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="Titulación" />
 
-                    <TextView
-                        android:layout_width="170dp"
-                        android:layout_height="90dp"
-                        android:textColor="@color/white"
-                        android:text="lorem que sepa el mundo que en marcha estoy, que xdxdxdxd cmssijf ifsifssfs sfisdo uogiiygy gygyfj"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
 
 
 

@@ -1,5 +1,6 @@
 package mx.itson.edu.keynote
 
+import android.app.TimePickerDialog
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.Timestamp
 import com.google.firebase.database.FirebaseDatabase
+import java.util.Calendar
 import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +37,7 @@ class AgregarClaseFragment : Fragment() {
     private var diasSeleccionados: ArrayList<String> = ArrayList()
     private var colorSeleccionado: Int = 0
     private var editMode:Boolean = false
+    private lateinit var fechaSeleccionada:Timestamp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -58,9 +61,35 @@ class AgregarClaseFragment : Fragment() {
         val checkBoxMi: CheckBox = myFragmentView!!.findViewById(R.id.miercoles)
         val checkBoxJ: CheckBox = myFragmentView!!.findViewById(R.id.jueves)
         val checkBoxV: CheckBox = myFragmentView!!.findViewById(R.id.viernes)
-        val fechaTxt: TimePicker = myFragmentView!!.findViewById(R.id.fechaTxt)
+        val fechaTxt: TextView = myFragmentView!!.findViewById(R.id.fechaTxt)
         val colores: RadioGroup = myFragmentView!!.findViewById(R.id.colores)
         val infoClase: EditText = myFragmentView!!.findViewById(R.id.infoTxt)
+
+        val calendar = Calendar.getInstance()
+        var currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        var currentMinute = calendar.get(Calendar.MINUTE)
+
+
+        val timePickerDialog = TimePickerDialog(
+            this.requireContext(),
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
+                fechaSeleccionada = Timestamp(calendar.timeInMillis / 1000, 0)
+                // Por ejemplo, puedes mostrar la hora seleccionada en un TextView
+                fechaTxt.text = String.format("%02d:%02d", hourOfDay, minute)
+            },
+            currentHour,
+            currentMinute,
+            false // true si deseas usar el formato de 24 horas, false para formato de 12 horas
+        )
+
+
+        fechaTxt.setOnClickListener{
+            timePickerDialog.show()
+        }
+
+
 
         if(arguments != null){
             editMode = true
@@ -70,6 +99,10 @@ class AgregarClaseFragment : Fragment() {
             val color = requireArguments().getInt("color")
             val dias = requireArguments().getStringArrayList("dias")
             val hora = requireArguments().getSerializable("hora") as java.util.Date
+
+            fechaTxt.text = String.format("%02d:%02d", hora.hours, hora.minutes)
+            timePickerDialog.updateTime(hora.hours, hora.minutes)
+
             tituloClase.setText(titulo)
             infoClase.setText(info)
             //Manejar Checkbox
@@ -78,22 +111,27 @@ class AgregarClaseFragment : Fragment() {
                     when(dia){
                         "L"->{
                             checkBoxL.isChecked = true
+                            diasSeleccionados.add("L")
                             checkBoxL.setBackgroundResource(R.drawable.navyblue_note_background)
                         }
                         "M"->{
                             checkBoxM.isChecked = true
+                            diasSeleccionados.add("M")
                             checkBoxM.setBackgroundResource(R.drawable.navyblue_note_background)
                         }
                         "Mi"->{
                             checkBoxMi.isChecked = true
+                            diasSeleccionados.add("Mi")
                             checkBoxMi.setBackgroundResource(R.drawable.navyblue_note_background)
                         }
                         "J"->{
                             checkBoxJ.isChecked = true
+                            diasSeleccionados.add("J")
                             checkBoxJ.setBackgroundResource(R.drawable.navyblue_note_background)
                         }
                         "V"->{
                             checkBoxV.isChecked = true
+                            diasSeleccionados.add("V")
                             checkBoxV.setBackgroundResource(R.drawable.navyblue_note_background)
                         }
                     }
@@ -105,32 +143,38 @@ class AgregarClaseFragment : Fragment() {
                     val radio: RadioButton = myFragmentView!!.findViewById(R.id.rRadio)
                     radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.recordRedSelected))
                     radio.isChecked = true
+                    colorSeleccionado = R.color.recordRed
                 }
                 R.color.green->{
                     val radio: RadioButton = myFragmentView!!.findViewById(R.id.gRadio)
                     radio.isChecked = true
                     radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.greenSelected))
+                    colorSeleccionado = R.color.green
                 }
                 R.color.blue->{
                     val radio: RadioButton = myFragmentView!!.findViewById(R.id.bRadio)
                     radio.isChecked = true
                     radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.blueSelected))
+                    colorSeleccionado = R.color.blue
                 }
                 R.color.purpleButton->{
                     val radio: RadioButton = myFragmentView!!.findViewById(R.id.pRadio)
                     radio.isChecked = true
                     radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.purpleSelected))
+                    colorSeleccionado = R.color.purpleButton
                 }
                 R.color.yellowButton->{
                     val radio: RadioButton = myFragmentView!!.findViewById(R.id.yRadio)
                     radio.isChecked = true
                     radio.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.yellowSelected))
+                    colorSeleccionado = R.color.yellowButton
                 }
             }
 
 
-            fechaTxt.hour = hora.hours
-            fechaTxt.minute = hora.minutes
+            /*fechaTxt.hour = hora.hours
+            fechaTxt.minute = hora.minutes*/
+
 
         }
 
@@ -141,15 +185,15 @@ class AgregarClaseFragment : Fragment() {
             val fragmentTransaction=fragmentManager.beginTransaction()
             val now = Timestamp.now()
             val nowDate = now.toDate()
-            nowDate.hours = fechaTxt.hour
-            nowDate.minutes = fechaTxt.minute
-            val timestamp = Timestamp(nowDate)
+            /*nowDate.hours = fechaTxt.hour
+            nowDate.minutes = fechaTxt.minute*/
+            //val timestamp = Timestamp(nowDate)
             //validar datos
             var titulo=tituloClase.text.toString()
             var info=infoClase.text.toString()
 
             if(titulo.length>=1||colorSeleccionado!=0){
-                val clase: Clase = Clase(tituloClase.text.toString(), infoClase.text.toString(), diasSeleccionados, timestamp, colorSeleccionado)
+                val clase: Clase = Clase(tituloClase.text.toString(), infoClase.text.toString(), diasSeleccionados, fechaSeleccionada, colorSeleccionado)
                 if(editMode){
                     val id = requireArguments().getString("id")
                     clase.id = id
@@ -295,6 +339,14 @@ class AgregarClaseFragment : Fragment() {
         claseRef.child(userId).setValue(clase)
         Toast.makeText(this.context, "Se guardó la clase correctamente", Toast.LENGTH_SHORT)
             .show()
+    }
+
+    private fun mostrarTimePicker(){
+
+
+        // Crea un TimePickerDialog
+
+
     }
 
     private fun actualizarClaseFirebase(clase: Clase){
