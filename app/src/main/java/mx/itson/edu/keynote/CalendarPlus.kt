@@ -81,6 +81,7 @@ class CalendarPlus : Fragment() {
         recyclerHorarioMi.layoutManager = layoutManagerMi
         recyclerHorarioJ.layoutManager = layoutManagerJ
         recyclerHorarioV.layoutManager = layoutManagerV
+
         btn_add.setOnClickListener{
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=AgregarClaseFragment()
@@ -97,8 +98,6 @@ class CalendarPlus : Fragment() {
         if (this.isAdded()) {
             // El fragmento está asociado con un FragmentManager, es seguro acceder a él
             fragmentManager = this.parentFragmentManager
-        } else {
-
         }
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -172,21 +171,24 @@ class CalendarPlus : Fragment() {
                 // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
                 //tareas.add(nuevaTarea)
             }
-            val adapterClasesL: AdapterClases =
-                AdapterClases(clasesL, manager, this.resources)
-            val adapterClasesM: AdapterClases =
-                AdapterClases(clasesM, manager, this.resources)
-            val adapterClasesMi: AdapterClases =
-                AdapterClases(clasesMi, manager, this.resources)
-            val adapterClasesJ: AdapterClases =
-                AdapterClases(clasesJ, manager, this.resources)
-            val adapterClasesV: AdapterClases =
-                AdapterClases(clasesV, manager, this.resources)
-            recyclerHorarioL.adapter = adapterClasesL
-            recyclerHorarioM.adapter = adapterClasesM
-            recyclerHorarioMi.adapter = adapterClasesMi
-            recyclerHorarioJ.adapter = adapterClasesJ
-            recyclerHorarioV.adapter = adapterClasesV
+            if(this.isAdded){
+                val adapterClasesL: AdapterClases =
+                    AdapterClases(clasesL, manager, this.resources)
+                val adapterClasesM: AdapterClases =
+                    AdapterClases(clasesM, manager, this.resources)
+                val adapterClasesMi: AdapterClases =
+                    AdapterClases(clasesMi, manager, this.resources)
+                val adapterClasesJ: AdapterClases =
+                    AdapterClases(clasesJ, manager, this.resources)
+                val adapterClasesV: AdapterClases =
+                    AdapterClases(clasesV, manager, this.resources)
+                recyclerHorarioL.adapter = adapterClasesL
+                recyclerHorarioM.adapter = adapterClasesM
+                recyclerHorarioMi.adapter = adapterClasesMi
+                recyclerHorarioJ.adapter = adapterClasesJ
+                recyclerHorarioV.adapter = adapterClasesV
+            }
+
 
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)

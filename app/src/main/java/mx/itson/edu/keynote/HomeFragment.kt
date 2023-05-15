@@ -67,7 +67,6 @@ class HomeFragment : Fragment() {
         } else {
         }
 
-
         recyclerHorario = myFragmentView!!.findViewById(R.id.recyclerHorario)
         val recyclerUltimas:RecyclerView = myFragmentView!!.findViewById(R.id.recyclerUltimas)
         val recyclerFijadas:RecyclerView = myFragmentView!!.findViewById(R.id.recyclerFijadas)
@@ -75,8 +74,6 @@ class HomeFragment : Fragment() {
         recyclerHorario.setLayoutManager(layoutManager)
         recyclerUltimas.setLayoutManager(layoutManagerUltimas)
         recyclerFijadas.setLayoutManager(layoutManagerFijadas)
-
-
 
         CoroutineScope(Dispatchers.Main).launch {
             val notas = getNotas()
@@ -86,7 +83,7 @@ class HomeFragment : Fragment() {
 
         return myFragmentView
     }
-    
+
     private suspend fun getNotas(): ArrayList<Note> = withContext(Dispatchers.Main) {
 
 

@@ -155,7 +155,6 @@ class AgregarClaseFragment : Fragment() {
                     clase.id = id
                     actualizarClaseFirebase(clase)
                 } else{
-
                     guardarClaseFirebase(clase)
                 }
 
