@@ -1,5 +1,6 @@
 package mx.itson.edu.keynote
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -84,6 +85,8 @@ class HomeFragment : Fragment() {
         return myFragmentView
     }
 
+
+    @SuppressLint("SuspiciousIndentation")
     private suspend fun getNotas(): ArrayList<Note> = withContext(Dispatchers.Main) {
 
 
@@ -100,14 +103,12 @@ class HomeFragment : Fragment() {
                         var titulo: String= mapNote.get("titulo").toString()
                         var contenido: String= mapNote.get("contenido").toString()
                         var tipo: String= mapNote.get("tipo").toString()
-                        var imagen: String= mapNote.get("image").toString()
+                        var imagen: String= mapNote.get("imagen").toString()
                         val nuevaTarea = Note(null,titulo, contenido, tipo, imagen)
                         nuevaTarea.id = key
                         notas.add(nuevaTarea)
 
                     }
-                    // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
-
                 }
             }
 

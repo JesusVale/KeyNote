@@ -22,18 +22,14 @@
             android:src="@drawable/rounded_gradient" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/perfilImg"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_below="@+id/imageView3"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-140dp"
-            android:background="@drawable/circle"
             android:clipToOutline="true"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.roundedImageView"
-            android:outlineProvider="background"
-            android:shape="oval"
-            android:scaleType="fitCenter"
             android:src="@drawable/piplup" />
 
     </RelativeLayout>

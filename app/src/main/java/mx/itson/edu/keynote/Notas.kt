@@ -32,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.net.URI
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +82,15 @@ class Notas : Fragment() {
             val titulo = requireArguments().getString("titulo")
             val contenido = requireArguments().getString("contenido")
             val imagen = requireArguments().getString("imagen")
+
+            if(imagen != ""){
+                downloadUri = Uri.parse(imagen)
+                Glide.with(this)
+                    .load(imagen)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgView)
+            }
+
             tituloNota.setText(titulo)
             contenidoNota.setText(contenido)
             btn_delete.visibility = View.VISIBLE
@@ -246,7 +256,8 @@ class Notas : Fragment() {
     private fun editarFirebase(note: Note){
         val nuevosValores = mapOf(
             "titulo" to note.titulo,
-            "contenido" to note.contenido
+            "contenido" to note.contenido,
+            "imagen" to note.imagen
         )
         noteRef.child(note.id!!).setValue(note)
         Toast.makeText(this.context, "Se guardaron los cambios correctamente", Toast.LENGTH_SHORT)
