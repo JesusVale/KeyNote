@@ -26,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -50,6 +53,7 @@ class Notas : Fragment() {
     private val noteRef= FirebaseDatabase.getInstance().getReference("Notes")
     private lateinit var imagen: String
     private var editMode:Boolean = false
+    private var downloadUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -94,7 +98,11 @@ class Notas : Fragment() {
         }
 
         btn_save.setOnClickListener{
-            var nota: Note = Note(UserSingleton.getUsuario().id,tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", imagen)
+
+            var nota: Note = Note(UserSingleton.getUsuario().id,tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
+            if(downloadUri != null){
+                nota.imagen = downloadUri.toString()
+            }
             if(editMode){
                 val id = requireArguments().getString("id")
                 nota.id = id
@@ -135,7 +143,34 @@ class Notas : Fragment() {
        if (requestCode == file) {
             if (resultCode == RESULT_OK) {
                 val FileUri = data!!.data
-                val Folder: StorageReference =
+
+                val storageRef = FirebaseStorage.getInstance().getReference().child("images")
+                if(FileUri != null){
+                    val uploadTask = storageRef.putFile(FileUri)
+                    uploadTask.continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
+                        }
+                        storageRef.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+
+                            downloadUri = task.result
+                            Glide.with(this)
+                                .load(downloadUri)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(imgView)
+                            // Aquí puedes usar la URI de descarga de la imagen
+                        } else {
+                            // Manejar el error
+                        }
+                    }
+                }
+
+
+                /*val Folder: StorageReference =
                     FirebaseStorage.getInstance().getReference().child("images")
 
                 val file_name: StorageReference = Folder.child("file" + FileUri!!.lastPathSegment)
@@ -148,7 +183,7 @@ class Notas : Fragment() {
                         imagen = java.lang.String.valueOf(uri)
                         Log.d("Mensaje", "Se subió correctamente")
                     }
-                }
+                }*/
             }
        }
             // Convertir el Bitmap a ByteArray
@@ -159,10 +194,7 @@ class Notas : Fragment() {
     }
 
     private fun guardarFirebase(note: Note){
-        /*val userId= noteRef.push().key!!
-        noteRef.child(userId).setValue(note)*/
-//        val db = Firebase.firestore
-//        val collection = db.collection("Notes")
+        //val collection = db.collection("Notes")
         /**Log.d("error","error")
         if (imagen != null) {
             val storageRef = FirebaseStorage.getInstance().reference

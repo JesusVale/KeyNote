@@ -164,8 +164,6 @@ class CalendarPlus : Fragment() {
                         }
                     }
                 }
-
-                Log.d("AAA", "${titulo}")
                 //val nuevaTarea = Note(titulo, contenido, tipo, imagen)
                 //nuevaTarea.id = key;
                 // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
@@ -227,8 +225,6 @@ class CalendarPlus : Fragment() {
             val texto: String = "${sdf.format(clase.hora.toDate())} ${clase.titulo}"
 
             holder.textoClase.setText(texto)
-            Log.d("colorGuardado", "${clase.color}")
-            Log.d("color", "${R.color.blue}")
             holder.textoClase.setBackgroundColor(recusos.getColor(clase.color))
 
             holder.textoClase.setOnClickListener{

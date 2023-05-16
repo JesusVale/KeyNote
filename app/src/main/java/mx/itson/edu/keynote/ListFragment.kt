@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.google.firebase.database.FirebaseDatabase
@@ -61,6 +62,14 @@ class ListFragment : Fragment() {
         recyclerTareasPasadas = myFragmentView!!.findViewById(R.id.recyclerTareasPasadas)
         recyclerTareasProximas = myFragmentView!!.findViewById(R.id.recyclerTareasProximas)
 
+        val layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerPasadas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerProximas = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
+
+        recyclerTareasDemas.layoutManager = layoutManager
+        recyclerTareasPasadas.layoutManager = layoutManagerPasadas
+        recyclerTareasProximas.layoutManager = layoutManagerProximas
+
         var fragmentManager: FragmentManager = this.parentFragmentManager
 
         if (this.isAdded()) {
@@ -73,7 +82,6 @@ class ListFragment : Fragment() {
 
         }
 
-
         btn_add.setOnClickListener{
             val fragmentManager=requireActivity().supportFragmentManager
             val segundoFragmento=AgregarTarea()
@@ -83,8 +91,6 @@ class ListFragment : Fragment() {
             fragmentTransaction.replace(R.id.fragment_container, segundoFragmento)
             fragmentTransaction.commit()
         }
-
-
 
         return myFragmentView
 
@@ -115,18 +121,14 @@ class ListFragment : Fragment() {
                 continue
             }
 
-            Log.d("EOO", "${tarea.titulo}")
-
             if(isDateInCurrentWeek(fecha.toDate().time)){
                 tarea.tipo = R.color.green
-                tareasDemas.add(tarea)
+                tareasProximas.add(tarea)
                 continue
             }
             tarea.tipo = R.color.recordRed
-            tareasProximas.add(tarea)
+            tareasDemas.add(tarea)
         }
-
-
 
         val adapterTareasPasadas = AdapterTareas(tareasPasadas, this.requireContext(), fragmentManager, this.resources)
         val adapterTareasDemas = AdapterTareas(tareasDemas, this.requireContext(), fragmentManager, this.resources)
@@ -148,23 +150,29 @@ class ListFragment : Fragment() {
         return date < currentDate
     }
 
-    fun isDateInCurrentWeek(date: Long): Boolean {
-        // Obtiene una instancia del Calendario
+    fun isDateInCurrentWeek(timestamp: Long): Boolean {
         val calendar = Calendar.getInstance()
 
         // Obtiene la fecha actual en milisegundos
         val currentDate = calendar.timeInMillis
+        val dateClase = Calendar.getInstance()
 
-        // Establece la fecha proporcionada en el objeto Calendar
-        calendar.timeInMillis = date
-
-        // Obtiene el número de semana de la fecha actual y de la fecha proporcionada
-        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR)
+        // Establece la fecha actual en el objeto Calendar
         calendar.timeInMillis = currentDate
-        val currentWeekToday = calendar.get(Calendar.WEEK_OF_YEAR)
+
+        // Obtiene el número de semana actual
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR)
+        Log.d("Current", "${currentDate}")
+
+        // Establece el timestamp proporcionado en el objeto Calendar
+        dateClase.timeInMillis = timestamp
+
+        // Obtiene el número de semana del timestamp proporcionado
+        val timestampWeek = dateClase.get(Calendar.WEEK_OF_YEAR)
+        Log.d("Clase", "${timestampWeek}")
 
         // Compara los números de semana
-        return currentWeek == currentWeekToday
+        return currentWeek == timestampWeek
     }
 
 
@@ -204,7 +212,9 @@ class ListFragment : Fragment() {
                 holder.contenido.setText(tarea.info)
             }
 
-            recusos.getColor(tarea.tipo)
+            holder.layoutNota.setBackgroundColor(recusos.getColor(tarea.tipo))
+
+
 
             /*holder.layoutNota.setOnClickListener{
                 val bundle = Bundle()

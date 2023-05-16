@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/rounded_gradient" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView4"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -29,12 +29,11 @@
             android:layout_marginTop="-140dp"
             android:background="@drawable/circle"
             android:clipToOutline="true"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.roundedImageView"
             android:outlineProvider="background"
             android:shape="oval"
             android:scaleType="fitCenter"
             android:src="@drawable/piplup" />
-
-
 
     </RelativeLayout>
 
@@ -85,8 +84,8 @@
             android:layout_marginTop="200dp"
             android:background="@drawable/rounded_button_logout"
             android:text="Cerrar Sesión"
-            android:textSize="16sp"
             android:textAllCaps="false"
+            android:textSize="16sp"
             app:backgroundTint="#ADAFE9" />
 
     </LinearLayout>
