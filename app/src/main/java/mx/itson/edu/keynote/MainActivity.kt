@@ -114,13 +114,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
+    fun replaceFragmentNav(fragment: Fragment) {
+        val fragmentManager: FragmentManager = supportFragmentManager;
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null)
+        fragmentTransaction.commit();
+    }
+    override fun onBackPressed() {
+        val fm: FragmentManager = supportFragmentManager
+        if (fm.backStackEntryCount > 0) {
+            fm.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.nav_notas ->{
                 toolbarTitle.setText("Notas")
                 originalToolbarState()
-                replaceFragment(Notas())
+                replaceFragmentNav(Notas())
                 addIcon.visibility = View.GONE
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
@@ -128,7 +141,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_ocultas ->{
                 toolbarTitle.setText("Ocultas")
                 originalToolbarState()
-                replaceFragment(OcultasFragment())
+                replaceFragmentNav(OcultasFragment())
                 addIcon.visibility = View.GONE
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
@@ -137,7 +150,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbarTitle.setText("Eliminadas")
                 originalToolbarState()
                 addIcon.visibility = View.GONE
-                replaceFragment(EliminadasFragment())
+                replaceFragmentNav(EliminadasFragment())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
@@ -145,7 +158,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbarTitle.setText("Configuracion")
                 originalToolbarState()
                 addIcon.visibility = View.GONE
-                replaceFragment(ConfiguracionFragment())
+                replaceFragmentNav(ConfiguracionFragment())
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }

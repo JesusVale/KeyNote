@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConfiguracionFragment">
+    tools:context=".ConfiguracionFragment"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -81,7 +82,7 @@
             android:layout_width="254dp"
             android:layout_height="72dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:background="@drawable/rounded_button_logout"
             android:text="Cerrar Sesión"
             android:textAllCaps="false"

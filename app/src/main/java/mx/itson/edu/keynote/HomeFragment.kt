@@ -187,7 +187,7 @@ class HomeFragment : Fragment() {
                 fragment.arguments = bundle
                 holder.layoutNota.setBackgroundResource(R.color.blueSelected)
                 val fragmentTransaction: FragmentTransaction = fragmentos.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null)
                 fragmentTransaction.commit();
             }
 

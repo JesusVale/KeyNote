@@ -33,11 +33,13 @@ class InicioSesion : AppCompatActivity() {
         txtOlvidado.setOnClickListener {
             val intent:Intent = Intent(this, Restablecer_contrasena::class.java)
             startActivity(intent)
+            finish()
         }
 
         registrar.setOnClickListener {
             val intent:Intent = Intent(this, registrar_usuario::class.java)
             startActivity(intent)
+            finish()
         }
 
 
@@ -88,6 +90,7 @@ class InicioSesion : AppCompatActivity() {
                     }
                     val intent:Intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+
                 }else{
                     Toast.makeText(baseContext,"Tu correo o contraseña no son correctas",Toast.LENGTH_SHORT)
                 }

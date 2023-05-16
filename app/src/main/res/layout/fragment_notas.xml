@@ -50,33 +50,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="250dp"
                     android:layout_marginEnd="20dp"
                     android:gravity="right">
 
                     <FrameLayout
                         android:id="@+id/menuNotas"
-                        android:layout_width="230dp"
+                        android:layout_width="130dp"
                         android:layout_height="50dp"
                         android:background="@drawable/rounded_button_play"
                         android:backgroundTint="@color/white">
 
-                        <ImageButton
-                            android:id="@+id/btn_voice"
-                            android:layout_width="35dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="5dp"
-                            android:background="@color/white"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/voice_line" />
+
 
                         <ImageButton
                             android:id="@+id/btn_save"
                             android:layout_width="35dp"
                             android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="0dp"
+                            android:layout_gravity="left"
+                            android:layout_marginStart="20dp"
                             android:background="@color/white"
                             android:scaleType="fitCenter"
                             android:src="@drawable/baseline_save_24" />

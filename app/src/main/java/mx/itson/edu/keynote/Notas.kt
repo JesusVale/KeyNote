@@ -70,7 +70,7 @@ class Notas : Fragment() {
 
         val myFragmentView: View? = inflater.inflate(R.layout.fragment_notas, container, false)
         val btn_camara: ImageView = myFragmentView!!.findViewById(R.id.btn_photo)
-        val btn_audio: ImageButton = myFragmentView!!.findViewById(R.id.btn_voice)
+
         val btn_save: ImageButton = myFragmentView!!.findViewById(R.id.btn_save)
         val btn_delete: Button = myFragmentView!!.findViewById(R.id.btn_delete)
         val tituloNota: EditText = myFragmentView!!.findViewById(R.id.tituloNota)
@@ -110,7 +110,8 @@ class Notas : Fragment() {
             } else{
                 guardarFirebase(nota)
             }
-
+            val fragment: Fragment = HomeFragment()
+            replaceFragment(fragment)
         }
 
         btn_delete.setOnClickListener{
@@ -118,13 +119,6 @@ class Notas : Fragment() {
             eliminarFirebase(id)
         }
 
-        btn_audio.setOnClickListener {
-            val fragmentManager=requireActivity().supportFragmentManager
-            val segundoFragmento=AudioRecordFragment()
-            val fragmentTransaction=fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, segundoFragmento);
-            fragmentTransaction.commit();
-        }
         return myFragmentView
     }
 
