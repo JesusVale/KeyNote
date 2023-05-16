@@ -52,27 +52,25 @@ class registrar_usuario : AppCompatActivity() {
         var correo=correoView.text.toString().trim()
         var password =passwordView.text.toString()
         var password2 =passwordView2.text.toString()
-        if(correo.isEmpty() || password.isEmpty() || password2.isEmpty()){
-            Toast.makeText(applicationContext,"Los campos no pueden estar vacios", Toast.LENGTH_SHORT).show()
-        }else{
-            if(password.length<7){
-                Toast.makeText(applicationContext,"La contraseña debe ser mayor a 7 caracteres",
-                    Toast.LENGTH_SHORT).show()
-            }else{
-                if(password == password2){
-
-                    val usuario=User(
+        if (correo.isEmpty() || password.isEmpty() || password2.isEmpty()) {
+            Toast.makeText(applicationContext, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+        } else {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
+                Toast.makeText(applicationContext, "Ingrese un correo electrónico válido", Toast.LENGTH_SHORT).show()
+            } else if (password.length < 7) {
+                Toast.makeText(applicationContext, "La contraseña debe tener al menos 7 caracteres", Toast.LENGTH_SHORT).show()
+            } else {
+                if (password == password2) {
+                    val usuario = User(
                         null,
                         correo,
                         nombre,
                         password
                     )
                     registrarFirebase(usuario)
-                }else{
-                    Toast.makeText(applicationContext,"Las contraseñas no son iguales",
-                        Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "Las contraseñas no son iguales", Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
     }

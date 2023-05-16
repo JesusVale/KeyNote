@@ -3,6 +3,8 @@ package mx.itson.edu.keynote
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -50,14 +52,17 @@ class InicioSesion : AppCompatActivity() {
         val passwordView: EditText= findViewById(R.id.passwordTxt)
         var correo=correoView.text.toString().trim()
         var password =passwordView.text.toString()
+        val isValidEmail = android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()
 
         if(correo.isEmpty() || password.isEmpty()){
             Toast.makeText(applicationContext,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show()
-        }else{
-            if(password.length<7){
-                Toast.makeText(applicationContext,"La contraseña debe ser mayor a 7 caracteres",Toast.LENGTH_SHORT).show()
-            }else{
-                val usuario=User(
+        }else {
+            if (!isValidEmail) {
+                Toast.makeText(applicationContext, "Ingrese un correo electrónico válido", Toast.LENGTH_SHORT).show()
+            } else if (password.length < 7) {
+                Toast.makeText(applicationContext, "La contraseña debe tener al menos 7 caracteres", Toast.LENGTH_SHORT).show()
+            } else {
+                val usuario = User(
                     null,
                     correo,
                     null,

@@ -96,7 +96,7 @@ class AgregarTarea : Fragment() {
         }
         btn_delete.setOnClickListener {
             val fragmentManager=requireActivity().supportFragmentManager
-            val segundoFragmento=ListFragment()
+            val segundoFragmento= ListFragment()
             val fragmentTransaction=fragmentManager.beginTransaction()
             btn_add.visibility = View.VISIBLE
             btn_lupa.visibility = View.VISIBLE

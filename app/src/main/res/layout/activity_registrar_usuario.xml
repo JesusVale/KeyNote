@@ -34,7 +34,8 @@
             android:hint="Correo"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="22dp"
-            android:paddingVertical="7dp" />
+            android:paddingVertical="7dp"
+            android:maxLength="30"/>
 
         <EditText
             android:id="@+id/nombre_usuario"
@@ -48,7 +49,8 @@
             android:hint="Nombre"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="22dp"
-            android:paddingVertical="7dp" />
+            android:paddingVertical="7dp"
+            android:maxLength="30"/>
 
         <EditText
             android:id="@+id/passwordTxt"
@@ -62,7 +64,8 @@
             android:inputType="textPassword"
             android:paddingHorizontal="22dp"
             android:paddingVertical="7dp"
-            android:layout_marginBottom="11dp" />
+            android:layout_marginBottom="11dp"
+            android:maxLength="30"/>
 
         <EditText
             android:id="@+id/passwordTxt2"
@@ -76,7 +79,8 @@
             android:inputType="textPassword"
             android:paddingHorizontal="22dp"
             android:paddingVertical="7dp"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginBottom="40dp"
+            android:maxLength="30"/>
 
         <Button
             android:id="@+id/btn_registrar"
