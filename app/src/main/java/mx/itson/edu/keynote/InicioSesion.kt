@@ -86,7 +86,8 @@ class InicioSesion : AppCompatActivity() {
                                     mapValue["id"].toString(),
                                     mapValue["correo"].toString(),
                                     mapValue["nombre"].toString(),
-                                    mapValue["password"].toString()
+                                    mapValue["password"].toString(),
+                                    mapValue["imagenPerfil"].toString()
                                 )
                                 Log.d("USUARIO", user.toString())
                                 UserSingleton.setUsuario(user)

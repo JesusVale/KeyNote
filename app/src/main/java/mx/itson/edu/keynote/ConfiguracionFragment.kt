@@ -53,10 +53,15 @@ class ConfiguracionFragment : Fragment() {
         perfilImg =  myFragmentView!!.findViewById(R.id.perfilImg)
 
         if(UserSingleton.getUsuario().imagenPerfil != "" && UserSingleton.getUsuario().imagenPerfil != null){
-            Glide.with(this)
-                .load(UserSingleton.getUsuario().imagenPerfil)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(perfilImg)
+            Log.d("Entro", "${UserSingleton.getUsuario().imagenPerfil}")
+            Log.d("Entro", "${UserSingleton.getUsuario().imagenPerfil == null}")
+            if(UserSingleton.getUsuario().imagenPerfil != null){
+                Glide.with(this)
+                    .load(UserSingleton.getUsuario().imagenPerfil)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(perfilImg)
+            }
+
         }
 
         btnLogout.setOnClickListener {
