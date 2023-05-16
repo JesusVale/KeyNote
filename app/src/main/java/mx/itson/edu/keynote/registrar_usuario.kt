@@ -62,6 +62,7 @@ class registrar_usuario : AppCompatActivity() {
                 if(password == password2){
 
                     val usuario=User(
+                        null,
                         correo,
                         nombre,
                         password
@@ -81,7 +82,9 @@ class registrar_usuario : AppCompatActivity() {
             .addOnCompleteListener(this){task->
                 if(task.isSuccessful){
                     //userRef.push().setValue(usuario)
+
                     val userId= userRef.push().key!!
+                    usuario.id=task.result.user?.uid
                     userRef.child(userId).setValue(usuario)
                     //myRef.push().setValue(usuario)
                     val intent: Intent = Intent(this, InicioSesion::class.java)

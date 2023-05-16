@@ -90,20 +90,29 @@ class HomeFragment : Fragment() {
         var notas: ArrayList<Note> = ArrayList()
 
         val it = noteRef.get().await()
-        var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
+            if(it.exists()){
+                var mapNotes :Map<String, Object> = it.getValue() as Map<String, Object>
+                for ((key,value) in mapNotes){
+                    var mapValue: Map<String,Object> = value as Map<String, Object>
+                    if(mapValue["idUser"].toString()==UserSingleton.getUsuario().id){
+
+                        var mapNote: Map<String,Object> = value as Map<String, Object>
+                        var titulo: String= mapNote.get("titulo").toString()
+                        var contenido: String= mapNote.get("contenido").toString()
+                        var tipo: String= mapNote.get("tipo").toString()
+                        var imagen: String= mapNote.get("image").toString()
+                        val nuevaTarea = Note(null,titulo, contenido, tipo, imagen)
+                        nuevaTarea.id = key
+                        notas.add(nuevaTarea)
+
+                    }
+                    // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
+
+                }
+            }
 
 
-        for ((key,value) in mapNotes){
-            var mapValue: Map<String,Object> = value as Map<String, Object>
-            var titulo: String= mapValue.get("titulo").toString()
-            var contenido: String= mapValue.get("contenido").toString()
-            var tipo: String= mapValue.get("tipo").toString()
-            var imagen: String= mapValue.get("image").toString()
-            val nuevaTarea = Note(titulo, contenido, tipo, imagen)
-            nuevaTarea.id = key;
-            // agregar la variable temporal a la lista tareas fuera del bloque addOnSuccessListener
-            notas.add(nuevaTarea)
-        }
+
 
         /*val db = Firebase.firestore
         val collection = db.collection("Notes")

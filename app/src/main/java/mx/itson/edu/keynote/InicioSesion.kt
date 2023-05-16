@@ -3,20 +3,24 @@ package mx.itson.edu.keynote
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 class InicioSesion : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private val userRef= FirebaseDatabase.getInstance().getReference("Users")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio_sesion)
         auth = Firebase.auth
+
         val btnLogin: Button = findViewById(R.id.btn_login)
         val registrar: TextView = findViewById(R.id.registrarse)
         val txtOlvidado: TextView = findViewById(R.id.contra_olvidada)
@@ -52,6 +56,7 @@ class InicioSesion : AppCompatActivity() {
                 Toast.makeText(applicationContext,"La contraseña debe ser mayor a 7 caracteres",Toast.LENGTH_SHORT).show()
             }else{
                 val usuario=User(
+                    null,
                     correo,
                     null,
                     password
@@ -64,6 +69,23 @@ class InicioSesion : AppCompatActivity() {
         auth.signInWithEmailAndPassword(usuario.correo.toString(),usuario.password.toString())
             .addOnCompleteListener(this){task->
                 if(task.isSuccessful){
+
+                    userRef.get().addOnSuccessListener {
+                        var mapUsers :Map<String, Object> = it.getValue() as Map<String, Object>
+                        for ((key,value) in mapUsers){
+                            var mapValue: Map<String,Object> = value as Map<String, Object>
+                            if(mapValue["id"].toString()== task.result.user?.uid){
+                                val user=User(
+                                    mapValue["id"].toString(),
+                                    mapValue["correo"].toString(),
+                                    mapValue["nombre"].toString(),
+                                    mapValue["password"].toString()
+                                )
+                                Log.d("USUARIO", user.toString())
+                                UserSingleton.setUsuario(user)
+                            }
+                        }
+                    }
                     val intent:Intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }else{

@@ -87,7 +87,7 @@ class Notas : Fragment() {
         }
 
         btn_save.setOnClickListener{
-            var nota: Note = Note(tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
+            var nota: Note = Note(UserSingleton.getUsuario().id,tituloNota.text.toString(), contenidoNota.text.toString(), "Normal", "")
             if(editMode){
                 val id = requireArguments().getString("id")
                 nota.id = id
@@ -130,17 +130,20 @@ class Notas : Fragment() {
     private fun guardarFirebase(note: Note){
         /*val userId= noteRef.push().key!!
         noteRef.child(userId).setValue(note)*/
-        val db = Firebase.firestore
-        val collection = db.collection("Notes")
-        collection.add(note)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this.context, "Se guardó la nota correctamente", Toast.LENGTH_SHORT)
-                    .show()
-            }
+//        val db = Firebase.firestore
+//        val collection = db.collection("Notes")
+        val noteId= noteRef.push().key!!
+
+        noteRef.child(noteId).setValue(note).addOnSuccessListener { documentReference ->
+            Toast.makeText(this.context, "Se guardó la nota correctamente", Toast.LENGTH_SHORT)
+                .show()
+        }
             .addOnFailureListener { e ->
                 Toast.makeText(this.context, "No se pudo guardar la nota correctamente", Toast.LENGTH_SHORT)
                     .show()
             }
+        //
+
 
     }
 
