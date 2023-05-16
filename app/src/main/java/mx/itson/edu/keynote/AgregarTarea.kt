@@ -81,9 +81,10 @@ class AgregarTarea : Fragment() {
         recyclerClasesTarea = myFragmentView!!.findViewById(R.id.recyclerClasesTarea)
         val layoutManager = LinearLayoutManager(this.activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerClasesTarea.layoutManager = layoutManager
+
         btn_plus.setOnClickListener {
 
-            val tarea: Tarea = Tarea(tituloTxt.text.toString(), fechaSeleccionada, clasesSeleccionados, infoTxt.text.toString())
+            val tarea: Tarea = Tarea(UserSingleton.getUsuario().id,tituloTxt.text.toString(), fechaSeleccionada, clasesSeleccionados, infoTxt.text.toString())
             agregarTarea(tarea)
 
             val fragmentManager=requireActivity().supportFragmentManager

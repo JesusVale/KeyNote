@@ -106,28 +106,30 @@ class ListFragment : Fragment() {
 
         for ((key,value) in mapNotes){
             var mapValue: Map<String,Object> = value as Map<String, Object>
-            var titulo: String= mapValue.get("titulo").toString()
-            var horaMap: HashMap<String, Object> = mapValue.get("fecha") as HashMap<String, Object>
-            val seconds: Long = horaMap.get("seconds") as Long
-            val nanoseconds: Long = horaMap.get("nanoseconds") as Long
-            var fecha = Timestamp(seconds, nanoseconds.toInt())
-            var clases: ArrayList<String> = mapValue.get("clases") as ArrayList<String>
-            var info: String= mapValue.get("info").toString()
-            val tarea = Tarea(titulo, fecha, clases, info)
-            tarea.id = key
-            if(isDatePast(fecha.toDate().time)){
-                tarea.tipo = R.color.blueSelected
-                tareasPasadas.add(tarea)
-                continue
-            }
+            if(UserSingleton.getUsuario().id == mapValue["idUser"].toString()){
+                var titulo: String= mapValue.get("titulo").toString()
+                var horaMap: HashMap<String, Object> = mapValue.get("fecha") as HashMap<String, Object>
+                val seconds: Long = horaMap.get("seconds") as Long
+                val nanoseconds: Long = horaMap.get("nanoseconds") as Long
+                var fecha = Timestamp(seconds, nanoseconds.toInt())
+                var clases: ArrayList<String> = mapValue.get("clases") as ArrayList<String>
+                var info: String= mapValue.get("info").toString()
+                val tarea = Tarea(null,titulo, fecha, clases, info)
+                tarea.id = key
+                if(isDatePast(fecha.toDate().time)){
+                    tarea.tipo = R.color.blueSelected
+                    tareasPasadas.add(tarea)
+                    continue
+                }
 
-            if(isDateInCurrentWeek(fecha.toDate().time)){
-                tarea.tipo = R.color.green
-                tareasProximas.add(tarea)
-                continue
+                if(isDateInCurrentWeek(fecha.toDate().time)){
+                    tarea.tipo = R.color.green
+                    tareasProximas.add(tarea)
+                    continue
+                }
+                tarea.tipo = R.color.recordRed
+                tareasDemas.add(tarea)
             }
-            tarea.tipo = R.color.recordRed
-            tareasDemas.add(tarea)
         }
 
         val adapterTareasPasadas = AdapterTareas(tareasPasadas, this.requireContext(), fragmentManager, this.resources)
